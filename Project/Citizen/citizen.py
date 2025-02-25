@@ -1,5 +1,5 @@
 from flask import Blueprint
-citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen')
+citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen', template_folder='templates')
 
 @citizen_bp.route('/')
 def citizen_base():
