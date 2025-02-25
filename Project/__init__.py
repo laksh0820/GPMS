@@ -1,12 +1,22 @@
 from flask import Flask
 import psycopg2
 from datetime import timedelta
+from Project.Admin.admin import admin_bp
+from Project.Citizen.citizen import citizen_bp
+from Project.Employee.employee import employee_bp
+from Project.Government.government import government_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'grampanchayatksdkar37ro8hf83fh3892hmfijw38fh'
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=20)
 app.config['SECURITY_PASSWORD_SALT']='email-confirmation-for-a-new-user//projectzetaX//23jnrxnl4r'
 app.config['FLASK_ADMIN_SWATCH'] = 'cosmo'
+
+# Register Blueprints
+app.register_blueprint(admin_bp)
+app.register_blueprint(citizen_bp)
+app.register_blueprint(employee_bp)
+app.register_blueprint(government_bp)
 
 DB_NAME = "22CS10036"
 DB_USER = "22CS10036"
