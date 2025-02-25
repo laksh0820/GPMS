@@ -1,6 +1,9 @@
-from flask import Blueprint,render_template
-from flask_login import login_required
-citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen',template_folder='templates')
+from flask import Blueprint
+citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen', template_folder='templates')
+
+@citizen_bp.route('/')
+def citizen_base():
+    return "Hello, Citizen"
 
 # Welfare Scheme (already benefitting, available/apply)
 # Vaccination (already received, available)
