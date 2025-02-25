@@ -9,6 +9,6 @@ def employee_base():
 def welfare_scheme():
     pass
 
-@employee_bp.route('/vaccinations',method=['GET','POST'])
+@employee_bp.route('/vaccinations')
 def vaccinations():
     pass
