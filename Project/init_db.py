@@ -26,49 +26,121 @@ db.execute("""
         id SERIAL PRIMARY KEY,
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(200) NOT NULL,
-        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'employee', 'citizen', 'government'))
-    )
+        citizen_id INT,
+        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'employee', 'citizen', 'government')),
+        foreign key (citizen_id) references citizen
+    );
     """)
 
-# Create 
+# Create Household Table
+db.execute(
+    """
+    CREATE TABLE Household (
+        household_id INT,
+        address VARCHAR(50),
+        income DECIMAL(12,4),
+        primary key (household_id)
+    );
+    """)
+
+# Create Citizen Table
+db.execute("""
+    CREATE TABLE Citizen (
+        citizen_id INT,
+        name VARCHAR(50),
+        gender VARCHAR(10),
+        dob DATE,
+        household_id INT,
+        educational_qualification VARCHAR(20),
+        primary key (citizen_id),
+        foreign key (household_id) references Household
+    );
+    """)
+
+# Create Panchayat Employee Table
+db.execute("""
+    CREATE TABLE Panchayat_Employee (
+        employee_id INT,
+        citizen_id INT,
+        role VARCHAR(50),
+        primary key (employee_id),
+        foreign key (citizen_id) references Citizen
+    );       
+    """)
+
+# Create Asset Table
+db.execute("""
+    CREATE TABLE Asset (
+        asset_id INT,
+        employee_id INT,
+        type VARCHAR(50),
+        location VARCHAR(50),
+        installation_date DATE,
+        primary key(asset_id),
+        foreign key (employee_id) references Panchayat_Employee
+    );
+    """)
 
 # Create Agriculture Table
 db.execute("""
-    CREATE TABLE IF NOT EXISTS agriculture (
-        id SERIAL PRIMARY KEY,
-        year INT NOT NULL,
-        crop_type VARCHAR(100) NOT NULL,
-        production FLOAT NOT NULL
-    )
+    CREATE TABLE Land_Record (
+        land_id INT,
+        citizen_id INT,
+        area_acres DECIMAL(10,4),
+        crop_type VARCHAR(50),
+        primary key (land_id),
+        foreign key (citizen_id) references Citizen
+    );
     """)
 
-# Create Health Table
+# Create Vaccination Table
 db.execute("""
-    CREATE TABLE IF NOT EXISTS health (
-        id SERIAL PRIMARY KEY,
-        facility_name VARCHAR(100) NOT NULL,
-        services TEXT NOT NULL,
-        patient_count INT NOT NULL
-    )
+    CREATE TABLE Vaccination (
+        vaccination_id INT,
+        citizen_id INT,
+        vaccine_type VARCHAR(50),
+        date_administered DATE,
+        primary key(vaccination_id),
+        foreign key (citizen_id) references Citizen
+    );
     """)
 
-# Create Education Table
+# Create Welfare-Scheme Table
 db.execute("""
-    CREATE TABLE IF NOT EXISTS education (
-        id SERIAL PRIMARY KEY,
-        school_name VARCHAR(100) NOT NULL,
-        students_count INT NOT NULL
-    )
+    CREATE TABLE Welfare_Scheme (
+        scheme_id INT,
+        name VARCHAR(50),
+        description VARCHAR(1000),
+        primary key (scheme_id)
+    );
     """)
 
-# Create Welfare Table
+# Create Scheme-Enrollment Table
 db.execute("""
-    CREATE TABLE IF NOT EXISTS welfare (
-        id SERIAL PRIMARY KEY,
-        scheme_name VARCHAR(100) NOT NULL,
-        beneficiaries INT NOT NULL,
-        amount FLOAT NOT NULL
-    )
+    CREATE TABLE Scheme_Enrollment (
+        enrollment_id INT,
+        citizen_id INT,
+        scheme_id INT,
+        enrollment_date DATE,
+        primary key (enrollment_id),
+        foreign key (citizen_id) references Citizen,
+        foreign key (scheme_id) references Welfare_Scheme
+    );
+    """)
+
+# Create a Census Data Table
+db.execute(
+    """
+    CREATE TABLE Census_Data (
+        data_id INT,
+        household_id INT,
+        citizen_id INT,
+        event_type VARCHAR(50),
+        event_date DATE,
+        primary key (data_id),
+        foreign key (household_id) references Household,
+        foreign key (citizen_id) references Citizen
+    );
     """)
 
 db.close()
