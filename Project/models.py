@@ -1,5 +1,5 @@
 from Project import db,app
-from flask_login import UserMixin,LoginManager,current_user
+from flask_login import UserMixin, LoginManager, current_user
 
 login_manager = LoginManager()
 login_manager.init_app(app)
