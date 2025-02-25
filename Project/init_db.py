@@ -18,7 +18,7 @@ except:
 # Creating a db
 db = conn.db() 
 
-# Creatign Tables
+# Creating Tables
 
 # Create Users Table
 db.execute("""
