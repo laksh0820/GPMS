@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Laksh\OneDrive\Desktop\IIT KGP\SEM-6\DBMS Lab\GPMS A4\env"
+VIRTUAL_ENV=".."
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
