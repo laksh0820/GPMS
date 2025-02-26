@@ -15,8 +15,8 @@ class SaveForm(FlaskForm):
 
 def employee_required(inner_func):
     def wrapped_function_employee(*args,**kwargs):
-        if (current_user.is_authenticated) and (current_user.role != 'employee' and current_user.role != 'admin'):
-            flash("Please log in as Employee to access this page",'error')
+        if (current_user.is_authenticated) and (current_user.role != 'panchayat_employee' and current_user.role != 'admin'):
+            flash("Please log in as Panchayat Employee to access this page",'error')
             return redirect(url_for('base'))
         return inner_func(*args,**kwargs)
     wrapped_function_employee.__name__ = inner_func.__name__
