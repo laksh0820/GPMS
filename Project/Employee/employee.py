@@ -30,12 +30,12 @@ except:
 db = conn.cursor()
 
 @employee_bp.route('/')
-# @login_required
+@login_required
 def employee_base():
     return render_template('employee_dashboard.html')
 
 @employee_bp.route('/taxes', methods=['GET','POST'])
-# @login_required
+@login_required
 def taxes():
     # check current_user type == employee
     table = "Overdue Taxes"
