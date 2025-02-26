@@ -5,7 +5,7 @@ government_bp = Blueprint('government',__name__,url_prefix='/government', templa
 
 @government_bp.route('/')
 @login_required
-@government_monitor_required
-def govenrment_base():
+# @government_monitor_required
+def base():
     return render_template('government_dashboard.html')
 
