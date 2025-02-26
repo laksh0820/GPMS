@@ -8,14 +8,13 @@ def government_monitor_required(inner_func):
         if (current_user.role != 'government' and current_user.role != 'admin'):
             flash("Please log in as Government Monitor to access this page",'error')
             return redirect(url_for(f'{current_user.role}.base'))
-            print ("User not logged in as Government Monitor")
         return inner_func(*args,**kwargs)
     wrapped_function_government_monitor.__name__ = inner_func.__name__
     return wrapped_function_government_monitor
 
 @government_bp.route('/')
 @login_required
-# @government_monitor_required
+@government_monitor_required
 def base():
     return render_template('government_dashboard.html')
 
