@@ -14,7 +14,7 @@ def base():
 @app.route('/login',methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
-        flash("Already loged in")
+        flash("Already logged in")
         return redirect(url_for('base'))
     
     form = LogInForm()
