@@ -41,9 +41,9 @@ def login():
                 elif form.role.data == 'panchayat_employee':
                     return redirect(url_for('employee.base'))
                 elif form.role.data == 'government':
-                    return redirect(url_for('government'))
+                    return redirect(url_for('government.base'))
                 elif form.role.data == 'admin':
-                    return redirect(url_for('admin'))
+                    return redirect(url_for('admin.base'))
             else:
                 flash("Wrong Password!! Try Again",'error') 
         else:

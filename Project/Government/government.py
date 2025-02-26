@@ -15,7 +15,7 @@ def government_monitor_required(inner_func):
 
 @government_bp.route('/')
 @login_required
-@government_monitor_required
+# @government_monitor_required
 def base():
     return render_template('government_dashboard.html')
 

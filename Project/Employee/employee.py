@@ -16,7 +16,7 @@ class SaveForm(FlaskForm):
 
 @employee_bp.route('/')
 @login_required
-def employee_base():
+def base():
     return render_template('employee_dashboard.html')
 
 @employee_bp.route('/taxes', methods=['GET','POST'])
