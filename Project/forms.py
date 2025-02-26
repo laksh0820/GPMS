@@ -12,7 +12,7 @@ class UserForm(FlaskForm):
                                         Length(min=MIN_PASSWORD_LEN,max=MAX_PASSWORD_LEN),
                                         EqualTo('confirm_password',message="Password does not match to Confirm Password. Please retype"),
                                         Regexp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]",
-                                            message="Password should contain atleast one lowercase character, one uppercase character,one number and one special character." )])
+                                        message="Password should contain atleast one lowercase character, one uppercase character,one number and one special character." )])
     confirm_password = PasswordField("Confirm-Password",validators=[DataRequired(),Length(min=MIN_PASSWORD_LEN,max=MAX_PASSWORD_LEN)])
     
 class LogInForm(FlaskForm):
