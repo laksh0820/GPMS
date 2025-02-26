@@ -50,10 +50,10 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Users (
         id SERIAL PRIMARY KEY,
-        email VARCHAR(100) UNIQUE NOT NULL,
+        email VARCHAR(100) NOT NULL,
         password VARCHAR(200) NOT NULL,
         citizen_id INT,
-        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'employee', 'citizen', 'government')),
+        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'panchayat_employee', 'citizen', 'government')),
         foreign key (citizen_id) references Citizen
     );
     """)

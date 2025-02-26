@@ -1,4 +1,5 @@
 from flask import Blueprint
+from flask_login import login_required
 citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen', template_folder='templates')
 
 @citizen_bp.route('/')

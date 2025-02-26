@@ -11,50 +11,53 @@
 
         {{ form.password.label(class="form-label") }}
         {{ form.password(class="form-control",id="Password") }}
-        <br/>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="togglePassword">
-            <label class="form-check-label" for="togglePassword">
-                    <p class="text-success">Show Password</p>
-            </label>
-        </div>
-
+        <input class="form-check-input" type="checkbox" value="" id="togglePassword">
+        <label class="form-check-label" for="togglePassword">Show Password</label>
+       
+        <br/><br/>
         {{ form.confirm_password.label(class="form-label") }}
         {{ form.confirm_password(class="form-control",id="CNFPassword") }}
-        <br/>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="toggleCNFPassword">
-            <label class="form-check-label" for="toggleCNFPassword">
-                    <p class="text-success">Show Confirm Password</p>
-            </label>
-        </div>
+        <input class="form-check-input" type="checkbox" value="" id="toggleCNFPassword">
+        <label class="form-check-label" for="toggleCNFPassword">Show Confirm Password</label>
 
+        <br/><br/>
         {% if role == 'citizen' %}
             {{ form.name.label(class="form-label") }}
             {{ form.name(class="form-control", placeholder="Enter name") }}
+            <br/>
 
+            {{ form.gender.label(class="form-label") }}
+            <br/>
             {% for subfield in form.gender %}
                 {{ subfield }}
                 {{ subfield.label }}
+                <br/>
             {% endfor %}
-
+            
+            <br/>
             {{ form.dob.label(class="form-label") }}
             {{ form.dob(class="form-control") }}
+            <br/>
 
             {{ form.educational_qualification.label(class="form-label") }}
-            {{ form.educational_qualification(class="form-contorl") }}
+            {{ form.educational_qualification(class="form-control",placeholder="Enter your educational qualification") }}
+            <br/>
 
             {{ form.household_id.label(class="form-label") }}
             {{ form.household_id(class="form-control") }}
+            <br/>
 
             {{ form.address.label(class="form-label") }}
             {{ form.address(class="form-control") }}
+            <br/>
 
             {{ form.income.label(class="form-label") }}
-            {{ form.income(class="form-label") }}
+            {{ form.income(class="form-control") }}
+            <br/>
         {% elif role == 'panchayat_employee' %}
-        {% elif role == 'admin' %}
-        {% else %}
+            {{ form.role.label(class='form-label') }}
+            {{ form.role(class='form-control',placeholder="Enter Your role in the Panchayat committee") }}
+            <br/>
         {% endif %}
 
         

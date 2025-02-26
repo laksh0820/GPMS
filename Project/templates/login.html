@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% block content %}
 
     {% for message in get_flashed_messages(with_categories = True) %}
@@ -33,6 +35,13 @@
             <p class="text-success">Show Password</p>
         </label>
     </div>
+
+    {% for subfield in form.role %}
+        {{ subfield }}
+        {{ subfield.label }}
+        <br/>
+    {% endfor %}
+
     {{ form.remember_me.label(class='form-label') }}
     {{ form.remember_me() }}
     <br />
