@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user,login_required,current_user,logout_user
 from flask_wtf import FlaskForm
-government_bp = Blueprint('government',__name__,url_prefix='/government', template_folder='templates')
+from Project.utils.db_utils import get_db_connection
+government_bp = Blueprint('government',__name__,url_prefix='/government', template_folder='templates', static_folder='static')
 
 def government_monitor_required(inner_func):
     def wrapped_function_government_monitor(*args,**kwargs):
@@ -16,12 +17,22 @@ def government_monitor_required(inner_func):
 @login_required
 @government_monitor_required
 def base():
-    return render_template('dashboard.html')
+    return render_template('Government/dashboard.html')
 
 @government_bp.route('/agricultural_data')
 @login_required
 @government_monitor_required
 def agricultural_data():
+    conn = get_db_connection()
+    db = conn.cursor()
+    
+    db.execute("""
+               SELECT * 
+               from land_records;
+            """)
+    res = db.fetchall()
+
+    
     pass
 
 @government_bp.route('/vaccination')
