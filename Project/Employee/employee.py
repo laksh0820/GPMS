@@ -60,7 +60,7 @@ def welfare_schemes():
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
-                SELECT scheme_id, name, description
+                SELECT *
                 FROM Welfare_Scheme;
                """)
     
@@ -74,9 +74,14 @@ def welfare_schemes():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                print(temp_list)
-                # db.execute("""
-                #            """)
+                db.execute("""
+                            DELETE FROM Welfare_Scheme
+                            WHERE scheme_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Welfare_Scheme
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
 
         # Process new rows
         for key, value in request.form.items():
@@ -86,9 +91,10 @@ def welfare_schemes():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                print(temp_list)
-                # db.execute("""
-                #            """)
+                db.execute("""
+                            INSERT INTO Welfare_Scheme
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
         conn.commit()
         db.close()
         conn.close()
