@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/><br/>
+    <form action='/register_role/{{ role }}' method='POST'>
+        <legend>Register</legend>
+        {{ form.hidden_tag() }}
+
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control",placeholder="someone@example.com") }}
+        <br/>
+
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control",id="Password") }}
+        <input class="form-check-input" type="checkbox" value="" id="togglePassword">
+        <label class="form-check-label" for="togglePassword">Show Password</label>
+       
+        <br/><br/>
+        {{ form.confirm_password.label(class="form-label") }}
+        {{ form.confirm_password(class="form-control",id="CNFPassword") }}
+        <input class="form-check-input" type="checkbox" value="" id="toggleCNFPassword">
+        <label class="form-check-label" for="toggleCNFPassword">Show Confirm Password</label>
+
+        <br/><br/>
+        {% if role == 'citizen' %}
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", placeholder="Enter name") }}
+            <br/>
+
+            {{ form.gender.label(class="form-label") }}
+            <br/>
+            {% for subfield in form.gender %}
+                {{ subfield }}
+                {{ subfield.label }}
+                <br/>
+            {% endfor %}
+            
+            <br/>
+            {{ form.dob.label(class="form-label") }}
+            {{ form.dob(class="form-control") }}
+            <br/>
+
+            {{ form.educational_qualification.label(class="form-label") }}
+            {{ form.educational_qualification(class="form-control",placeholder="Enter your educational qualification") }}
+            <br/>
+
+            {{ form.household_id.label(class="form-label") }}
+            {{ form.household_id(class="form-control") }}
+            <br/>
+
+            {{ form.address.label(class="form-label") }}
+            {{ form.address(class="form-control") }}
+            <br/>
+
+            {{ form.income.label(class="form-label") }}
+            {{ form.income(class="form-control") }}
+            <br/>
+        {% elif role == 'panchayat_employee' %}
+            {{ form.role.label(class='form-label') }}
+            {{ form.role(class='form-control',placeholder="Enter Your role in the Panchayat committee") }}
+            <br/>
+        {% endif %}
+
+        
+        {{ form.submit(class="btn btn-secondary" , id="submit_tab") }}
+    </form>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#Password');
+        const toggleCNFPassword =document.querySelector('#toggleCNFPassword');
+        const cnfpassword = document.querySelector('#CNFPassword');
+        togglePassword.addEventListener('click', () => {
+            // Toggle the type attribute using getAttribure() method
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+        });
+        toggleCNFPassword.addEventListener('click', () => {
+            // Toggle the type attribute using getAttribure() method
+            const type = cnfpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            cnfpassword.setAttribute('type', type);
+        });
+    </script>
+
+{% endblock %}

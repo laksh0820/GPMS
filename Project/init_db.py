@@ -4,33 +4,23 @@ DB_NAME = "22CS10036"
 DB_USER = "22CS10036"
 DB_PASSWORD = "kmb2003"
 DB_HOST = "10.5.18.70"
+DB_PORT = "5432"
 
 # Connect to database
 try:
-    conn = psycopg2.connect(database=DB_NAME,
+    conn = psycopg2.connect(dbname=DB_NAME,
                             user=DB_USER,
                             password=DB_PASSWORD,
-                            host=DB_HOST)
+                            host=DB_HOST,
+                            port=DB_PORT)
     print("Database connected successfully")
 except:
     print("Database not connected successfully")
 
 # Creating a db
-db = conn.db() 
+db = conn.cursor() 
 
 # Creating Tables
-
-# Create Users Table
-db.execute("""
-    CREATE TABLE IF NOT EXISTS user (
-        id SERIAL PRIMARY KEY,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password VARCHAR(200) NOT NULL,
-        citizen_id INT,
-        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'employee', 'citizen', 'government')),
-        foreign key (citizen_id) references citizen
-    );
-    """)
 
 # Create Household Table
 db.execute("""
@@ -56,26 +46,50 @@ db.execute("""
     );
     """)
 
+# Create Users Table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Users (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(200) NOT NULL,
+        citizen_id INT,
+        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'panchayat_employee', 'citizen', 'government')),
+        foreign key (citizen_id) references Citizen
+    );
+    """)
+
 # Create Panchayat Employee Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Panchayat_Employee (
-        employee_id INT,
+        employee_id SERIAL PRIMARY KEY,
         citizen_id INT,
         role VARCHAR(50),
-        primary key (employee_id),
         foreign key (citizen_id) references Citizen
     );       
+    """)
+
+# Create Taxes table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Taxes (
+        tax_id SERIAL PRIMARY KEY,
+        citizen_id INT,  
+        type VARCHAR(50),
+        tax_year INT,
+        amount_due DECIMAL(12,4),
+        due_data Date,
+        status VARCHAR(20),
+        foreign key (citizen_id) references Citizen
+    );
     """)
 
 # Create Asset Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Asset (
-        asset_id INT,
+        asset_id SERIAL PRIMARY KEY,
         employee_id INT,
         type VARCHAR(50),
         location VARCHAR(50),
         installation_date DATE,
-        primary key(asset_id),
         foreign key (employee_id) references Panchayat_Employee
     );
     """)
@@ -83,11 +97,10 @@ db.execute("""
 # Create Agriculture Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Land_Record (
-        land_id INT,
+        land_id SERIAL PRIMARY KEY,
         citizen_id INT,
         area_acres DECIMAL(10,4),
         crop_type VARCHAR(50),
-        primary key (land_id),
         foreign key (citizen_id) references Citizen
     );
     """)
@@ -95,11 +108,10 @@ db.execute("""
 # Create Vaccination Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Vaccination (
-        vaccination_id INT,
+        vaccination_id SERIAL PRIMARY KEY,
         citizen_id INT,
         vaccine_type VARCHAR(50),
         date_administered DATE,
-        primary key(vaccination_id),
         foreign key (citizen_id) references Citizen
     );
     """)
@@ -107,21 +119,19 @@ db.execute("""
 # Create Welfare-Scheme Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Welfare_Scheme (
-        scheme_id INT,
+        scheme_id SERIAL PRIMARY KEY,
         name VARCHAR(50),
-        description VARCHAR(1000),
-        primary key (scheme_id)
+        description VARCHAR(1000)
     );
     """)
 
 # Create Scheme-Enrollment Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Scheme_Enrollment (
-        enrollment_id INT,
+        enrollment_id SERIAL PRIMARY KEY,
         citizen_id INT,
         scheme_id INT,
         enrollment_date DATE,
-        primary key (enrollment_id),
         foreign key (citizen_id) references Citizen,
         foreign key (scheme_id) references Welfare_Scheme
     );
@@ -130,16 +140,16 @@ db.execute("""
 # Create a Census Data Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Census_Data (
-        data_id INT,
+        data_id SERIAL PRIMARY KEY,
         household_id INT,
         citizen_id INT,
         event_type VARCHAR(50),
         event_date DATE,
-        primary key (data_id),
         foreign key (household_id) references Household,
         foreign key (citizen_id) references Citizen
     );
     """)
+conn.commit()
 
 db.close()
 conn.close()
