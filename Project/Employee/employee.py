@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-import psycopg2
+from Project.utils.db_utils import get_db_connection
+
 employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates')
 
 # Flask-WTF forms
@@ -12,24 +13,6 @@ class UpdateStatusForm(FlaskForm):
 class SaveForm(FlaskForm):
     submit = SubmitField('Save All')
 
-
-DB_NAME = "22CS10036"
-DB_USER = "22CS10036"
-DB_PASSWORD = "kmb2003"
-DB_HOST = "10.5.18.70"
-
-# Connect to database
-try:
-    conn = psycopg2.connect(database=DB_NAME,
-                            user=DB_USER,
-                            password=DB_PASSWORD,
-                            host=DB_HOST)
-    print("Database connected successfully")
-except:
-    print("Database not connected successfully")
-
-# Creating a db
-db = conn.cursor()
 
 @employee_bp.route('/')
 @login_required
@@ -74,6 +57,8 @@ def welfare_schemes():
     # check current_user type == employee
     table = "Current Welfare Schemes"
     columns = ['ID', 'Scheme Name', 'Description']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                 SELECT scheme_id, name, description
                 FROM Welfare_Scheme;
@@ -105,9 +90,14 @@ def welfare_schemes():
                 # db.execute("""
                 #            """)
         conn.commit()
+        db.close()
+        conn.close()
         return redirect(url_for('employee.welfare_schemes'))
     
-    return render_template('employee_content.html', page = 'Welfare Schemes', table_name = table, columns = columns, data = db.fetchall(), form = form)
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Welfare Schemes', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/vaccinations', methods=['GET','POST'])
 @login_required
