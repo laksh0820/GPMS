@@ -14,15 +14,15 @@
     <div class="container">
         {% for message in get_flashed_messages(with_categories = True) %}
         {% if message|first == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px; transition: opacity 1s;">
-                        {{ message[1] }}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px; transition: opacity 1s;">
+                {{ message[1] }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            </div>
         {% else %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px; transition: opacity 1s;">
-                        {{ message[1] }}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px; transition: opacity 1s;">
+                {{ message[1] }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            </div>
         {% endif %}
         {% endfor %}
         
@@ -39,6 +39,9 @@
 			alerts.forEach(function(alert) {
 				setTimeout(function() {
 					alert.style.opacity = '0';
+					setTimeout(function() {
+						alert.remove();
+					}, 1000);
 				}, 1000);
 			});
 		}
