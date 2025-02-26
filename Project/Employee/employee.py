@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from Project.utils.db_utils import get_db_connection
 
-employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates')
+employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates', static_folder='static')
 
 # Flask-WTF forms
 class UpdateStatusForm(FlaskForm):

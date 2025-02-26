@@ -5,15 +5,6 @@
 <h4>{{ table_name }}</h4>
 
 {% if page == 'Taxes' %}
-<style>
-    table {
-        border-collapse: collapse;
-    }
-    table, th, td {
-        border: 1px solid black;
-    }
-</style>
-
 <table>
     <thead>
         <tr>
@@ -42,18 +33,6 @@
 </table>
 
 {% else %}
-<style>
-    table {
-        border-collapse: collapse;
-    }
-    table, th, td {
-        border: 1px solid black;
-    }
-    .editable {
-        cursor: pointer;
-    }
-</style>
-
 <script>
     // Function to make a cell editable
     function makeEditable(cell) {
@@ -102,6 +81,7 @@
 
 <form method="POST">
     {{ form.hidden_tag() }}
+    <div>
     <table id="editableTable">
         <thead>
             <tr>
@@ -132,7 +112,8 @@
         </tbody>
     </table>
     <button type="button" onclick="addRow()">Add Row</button>
-    <button type="submit">Save All</button>
+    </div>
+    <button class="savebtn" type="submit">Save All</button>
 </form>
 {% endif %}
 

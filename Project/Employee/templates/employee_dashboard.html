@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('employee.static', filename='styles.css') }}">
+{% endblock %}
 
+{% block content %}
         
     {% for message in get_flashed_messages(with_categories = True) %}
     {% if message|first == "error" %}
@@ -17,9 +20,7 @@
     {% endif %}
     {% endfor %}
 
-
-
-<div>
+<div class="sidebar">
     <ul>
         <li><a href = "/employee/taxes">Tax Data</a></li>
         <li><a href = "/employee/welfare_schemes">Welfare Schemes</a></li>
@@ -33,7 +34,9 @@
     </ul>
 </div>
 
+<div class="main">
 {% block employee_content %}
 {% endblock %}
+</div>
 
 {% endblock %}

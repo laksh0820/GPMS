@@ -27,7 +27,7 @@ db.execute("""
     CREATE TABLE IF NOT EXISTS Household (
         household_id INT,
         address VARCHAR(50),
-        income DECIMAL(12,4),
+        income DECIMAL(12,2),
         primary key (household_id)
     );
     """)
@@ -75,7 +75,7 @@ db.execute("""
         citizen_id INT,  
         type VARCHAR(50),
         tax_year INT,
-        amount_due DECIMAL(12,4),
+        amount_due DECIMAL(12,2),
         due_data Date,
         status VARCHAR(20),
         foreign key (citizen_id) references Citizen
