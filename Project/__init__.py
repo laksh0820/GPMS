@@ -18,6 +18,9 @@ app.config['DB_NAME'] = DB_NAME
 app.config['DB_USER'] = DB_USER
 app.config['DB_PASSWORD'] = DB_PASSWORD
 app.config['DB_HOST'] = DB_HOST
+app.config['EXPLAIN_TEMPLATE_LOADING'] = False
+app.config['DEBUG'] = True
+app.config['TESTING'] = False
 
 # Register Blueprints
 app.register_blueprint(admin_bp)
