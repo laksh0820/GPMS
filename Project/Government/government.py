@@ -5,7 +5,7 @@ government_bp = Blueprint('government',__name__,url_prefix='/government', templa
 
 def government_monitor_required(inner_func):
     def wrapped_function_government_monitor(*args,**kwargs):
-        if (current_user.role != 'government' and current_user.role != 'admin'):
+        if current_user.is_authenticated and current_user.role != 'government' and current_user.role != 'admin':
             flash("Please log in as Government Monitor to access this page",'error')
             return redirect(url_for(f'{current_user.role}.base'))
         return inner_func(*args,**kwargs)
@@ -16,5 +16,28 @@ def government_monitor_required(inner_func):
 @login_required
 @government_monitor_required
 def base():
-    return render_template('government_dashboard.html')
+    return render_template('dashboard.html')
 
+@government_bp.route('/agricultural_data')
+@login_required
+@government_monitor_required
+def agricultural_data():
+    pass
+
+@government_bp.route('/vaccination')
+@login_required
+@government_monitor_required
+def vaccination():
+    pass
+
+@government_bp.route('/census_data')
+@login_required
+@government_monitor_required
+def census_data():
+    pass
+
+@government_bp.route('/environmental_data')
+@login_required
+@government_monitor_required
+def environmental_data():
+    pass
