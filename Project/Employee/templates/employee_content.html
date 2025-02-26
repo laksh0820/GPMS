@@ -1,0 +1,138 @@
+{% extends "employee_dashboard.html" %}
+
+{% block employee_content %}
+<h2>{{ page }}</h2>
+<h4>{{ table_name }}</h4>
+
+{% if page == 'Taxes' %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .paid {
+        color: green;
+    }
+    .unpaid {
+        color: red;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            {% for item in row %}
+            <td>{{ item }}</td>
+            {% endfor %}
+            <td>
+                <form method="POST" style="display:inline;">
+                    {{ form.hidden_tag() }}
+                    <input type="hidden" name="tax_id" value="{{ row[0] }}">
+                    {{ form.submit(class="btn") }}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    .editable {
+        cursor: pointer;
+    }
+    .editable input {
+        display: none;
+    }
+</style>
+
+<script>
+    // Function to make a cell editable
+    function makeEditable(cell) {
+        var span = cell.querySelector('span');
+        var input = cell.querySelector('input');
+        if (span.style.display !== 'none') {
+            span.style.display = 'none';
+            input.style.display = 'inline';
+            input.focus();
+        }
+    }
+
+    // Function to add a new row
+    function addRow() {
+        var table = document.getElementById('editableTable').getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(table.rows.length);
+
+        // Get the columns array length from the template
+        var columns = {{ columns | tojson | safe }};
+        var rowCount = table.rows.length;
+
+        // Loop through the columns and create cells
+        columns.forEach(function(column, index) {
+            var cell = newRow.insertCell(index);
+            // Add editable content for the columns
+            cell.innerHTML = `
+                <span>Click to edit</span>
+                <input type="text" name="item_${rowCount}_${index + 1}" style="display:none;">
+            `;
+            cell.classList.add('editable');
+            cell.onclick = function() { makeEditable(cell); };
+            }
+        );
+    }
+</script>
+
+<form method="POST">
+    <table id="editableTable">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                {% for item in row %}
+                <td class="editable" onclick="makeEditable(this)">
+                    <span>{{ item }}</span>
+                    <input type="text" name="item_{{ loop.parent.index }}_{{ loop.index }}" value="{{ item }}" style="display:none;">
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" onclick="addRow()">Add Row</button>
+    <button type="submit">Save All</button>
+</form>
+{% endif %}
+
+{% endblock %}
