@@ -2,14 +2,16 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+import psycopg2
+employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates')
 
-# Flask-WTF form for updating status
+# Flask-WTF forms
 class UpdateStatusForm(FlaskForm):
     submit = SubmitField('Mark as Paid')
 
-employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates')
+class SaveForm(FlaskForm):
+    submit = SubmitField('Save All')
 
-import psycopg2
 
 DB_NAME = "22CS10036"
 DB_USER = "22CS10036"
@@ -64,12 +66,41 @@ def taxes():
 def welfare_schemes():
     # check current_user type == employee
     table = "Current Welfare Schemes"
-    columns = ['Scheme Name', 'Description']
+    columns = ['ID', 'Scheme Name', 'Description']
     db.execute("""
-                SELECT name, description
+                SELECT scheme_id, name, description
                 FROM Welfare_Scheme;
                """)
-    return render_template('employee_content.html', page = 'Welfare Schemes', table_name = table, columns = columns, data = db.fetchall())
+    
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                print(temp_list)
+                # db.execute("""
+                #            """)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                print(temp_list)
+                # db.execute("""
+                #            """)
+        conn.commit()
+        return redirect(url_for('employee.welfare_schemes'))
+    
+    return render_template('employee_content.html', page = 'Welfare Schemes', table_name = table, columns = columns, data = db.fetchall(), form = form)
 
 @employee_bp.route('/vaccinations', methods=['GET','POST'])
 @login_required

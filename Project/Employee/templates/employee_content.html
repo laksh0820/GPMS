@@ -7,24 +7,10 @@
 {% if page == 'Taxes' %}
 <style>
     table {
-        width: 100%;
         border-collapse: collapse;
     }
     table, th, td {
         border: 1px solid black;
-    }
-    th, td {
-        padding: 10px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-    .paid {
-        color: green;
-    }
-    .unpaid {
-        color: red;
     }
 </style>
 
@@ -58,7 +44,6 @@
 {% else %}
 <style>
     table {
-        width: 100%;
         border-collapse: collapse;
     }
     table, th, td {
@@ -66,9 +51,6 @@
     }
     .editable {
         cursor: pointer;
-    }
-    .editable input {
-        display: none;
     }
 </style>
 
@@ -96,13 +78,21 @@
         // Loop through the columns and create cells
         columns.forEach(function(column, index) {
             var cell = newRow.insertCell(index);
-            // Add editable content for the columns
-            cell.innerHTML = `
-                <span>Click to edit</span>
-                <input type="text" name="item_${rowCount}_${index + 1}" style="display:none;">
-            `;
-            cell.classList.add('editable');
-            cell.onclick = function() { makeEditable(cell); };
+            if (index == 0) {
+                // Add the index column (read-only)
+                cell.innerHTML = `
+                    <span>${rowCount}</span>
+                    <input type="hidden" name="index_new_${rowCount}" value="${rowCount}">
+                `;
+            } else {
+                // Add editable content for other columns
+                cell.innerHTML = `
+                    <span>Click to edit</span>
+                    <input type="text" name="item_new_${rowCount}_${index}" style="display:none;">
+                `;
+                cell.classList.add('editable');
+                cell.onclick = function() { makeEditable(cell); };
+            }
             }
         );
     }
@@ -121,10 +111,17 @@
             {% for row in data %}
             <tr>
                 {% for item in row %}
+                {% if loop.index == 1 %}
+                <td>
+                    <span>{{ item }}</span>
+                    <input type="hidden" name="index_{{ loop.parent.index }}" value="{{ item }}">
+                </td>
+                {% else %}
                 <td class="editable" onclick="makeEditable(this)">
                     <span>{{ item }}</span>
                     <input type="text" name="item_{{ loop.parent.index }}_{{ loop.index }}" value="{{ item }}" style="display:none;">
                 </td>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
