@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
-<p>Citizen Welfare Scheme</p>
+<br/>
+<div class="container-fluid bg-light border border-info shadow p-3 mb-5 rounded-3">
+    <h1><small class="text-dark">Welfare Schemes</small></h1>
+    <div class="p-2 mb-3 rounded">  
+    <table class="table table-striped table-hover table-bordered=borderless caption-top rounded" >
+        <thead>
+            <tr>
+                <th scope="col">Scheme Title</th>
+                <th scope="col">Scheme Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for scheme in scheme_title %}
+            <tr>
+                <th scope="row">{{ scheme }}</td>
+                <td><a class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">{{ scheme_description[loop.index0] }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
 
 {% endblock %}

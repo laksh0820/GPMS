@@ -33,6 +33,17 @@ def login():
             if user.password == form.password.data:
                 login_user(user,remember=form.remember_me.data)
                 flash('Logged in Successfully')
+                
+                db.close()
+                conn.close()
+                if form.role.data == 'citizen':
+                    return redirect(url_for('citizen.base'))
+                elif form.role.data == 'panchayat_employee':
+                    return redirect(url_for('employee.base'))
+                elif form.role.data == 'government':
+                    return redirect(url_for('government'))
+                elif form.role.data == 'admin':
+                    return redirect(url_for('admin'))
             else:
                 flash("Wrong Password!! Try Again",'error') 
         else:
