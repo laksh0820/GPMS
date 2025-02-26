@@ -42,6 +42,8 @@ def taxes():
     # check current_user type == employee
     table = "Overdue Taxes"
     columns = ['ID', 'Name', 'Tax Type', 'Tax Year', 'Amount Due (Rs)', 'Due Date', 'Status']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                 SELECT tax_id, name, type, tax_year, amount_due, due_date, status
                 FROM Taxes JOIN Citizen ON Taxes.citizen_id = Citizen.citizen_id
@@ -57,9 +59,14 @@ def taxes():
                     WHERE tax_id = %s;
                    """, [tax_id])
         conn.commit()
+        db.close()
+        conn.close()
         return redirect(url_for('employee.taxes'))
     
-    return render_template('employee_content.html', page = 'Taxes', table_name = table, columns = columns, data = db.fetchall(), form = form)
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Taxes', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/welfare_schemes', methods=['GET','POST'])
 @login_required
@@ -108,11 +115,16 @@ def vaccinations():
     # check current_user type == employee
     table = "Administered Vaccines"
     columns = ['Vaccine Type']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                 SELECT DISTINCT vaccine_type
                 FROM Vaccination;
                """)
-    return render_template('employee_content.html', page = 'Vaccinations', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Vaccinations', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/services', methods=['GET','POST'])
 @login_required
@@ -120,9 +132,14 @@ def services():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Services', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Services', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/expenditures', methods=['GET','POST'])
 @login_required
@@ -130,9 +147,14 @@ def expenditures():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Expenditures', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Expenditures', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/assets', methods=['GET','POST'])
 @login_required
@@ -140,9 +162,14 @@ def assets():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Assets', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Assets', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/agriculture', methods=['GET','POST'])
 @login_required
@@ -150,9 +177,14 @@ def agriculture():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Agricultural Data', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Agricultural Data', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/census', methods=['GET','POST'])
 @login_required
@@ -160,9 +192,14 @@ def census():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Census Records', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Census Records', table_name = table, columns = columns, data = res)
 
 @employee_bp.route('/environment', methods=['GET','POST'])
 @login_required
@@ -170,6 +207,11 @@ def environment():
     # check current_user type == employee
     table = ""
     columns = ['', '']
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""
                """)
-    return render_template('employee_content.html', page = 'Environmental Data', table_name = table, columns = columns, data = db.fetchall())
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return render_template('employee_content.html', page = 'Environmental Data', table_name = table, columns = columns, data = res)

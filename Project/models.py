@@ -1,5 +1,6 @@
-from Project import db,app
+from Project import app
 from flask_login import UserMixin, LoginManager, current_user
+from Project.utils.db_utils import get_db_connection
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -7,11 +8,16 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
+    conn = get_db_connection()
+    db = conn.cursor()
     db.execute("""SELECT *
                   FROM users
                   WHERE id = %s;
                """, [user_id])
-    return User(db.fetchall()[0])
+    res = db.fetchall()
+    db.close()
+    conn.close()
+    return User(res[0])
 
 class User(UserMixin):
     def __init__(self,data):

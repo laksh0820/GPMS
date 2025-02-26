@@ -1,8 +1,9 @@
 from flask import Flask,render_template,redirect,url_for,flash, request
 from flask_login import login_user,login_required,current_user,logout_user
-from Project import app,db,conn
+from Project import app
 from Project.forms import LogInForm,CitizenForm,PanchayatEmployeeForm,GovernmentForm,AdminForm
 from Project.models import User
+from Project.utils.db_utils import get_db_connection
 
 # Home Page
 @app.route('/')
@@ -19,6 +20,8 @@ def login():
     form = LogInForm()
 
     if form.validate_on_submit():
+        conn = get_db_connection()
+        db = conn.cursor()
         db.execute("""
                     SELECT *
                     FROM users
@@ -34,6 +37,8 @@ def login():
                 flash("Wrong Password!! Try Again",'error') 
         else:
             flash("User not Found!! Try Again",'error')
+        db.close()
+        conn.close()
     return render_template('login.html',form=form)
 
 # Log out to an logged in User
@@ -65,6 +70,8 @@ def register_role(role):
         return redirect(url_for('register'))
     
     if form.validate_on_submit():
+        conn = get_db_connection()
+        db = conn.cursor()
         db.execute("""
                     SELECT id, email, password, role
                     FROM users
@@ -73,6 +80,8 @@ def register_role(role):
         users = db.fetchall()
         if len(users):
             flash('This email and role already exits. Please sign in or Register with a different role','error')
+            db.close()
+            conn.close()
             return redirect(url_for('register'))
         else:
             if role == 'citizen':
@@ -103,6 +112,8 @@ def register_role(role):
                         """,[form.email.data,form.password.data,citizen_id,role])
                 conn.commit()
                 flash('Registration Successful','Success')
+                db.close()
+                conn.close()
                 return redirect(url_for('login'))
             elif role == 'panchayat_employee':
                 db.execute("""
@@ -113,6 +124,8 @@ def register_role(role):
                 res = db.fetchall()
                 if len(res) == 0:
                     flash('Please Register as a citizen before registering as a Panchayat Employee','error')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('register'))
                 else:
                     user = User(res[0])
@@ -124,6 +137,8 @@ def register_role(role):
                         """,[form.email.data,form.password.data,role])
                     conn.commit()
                     flash('Registration Successful','Success')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('login'))
             elif role == 'government':
                 db.execute("""
@@ -134,6 +149,8 @@ def register_role(role):
                 res = db.fetchall()
                 if len(res) == 0:
                     flash('Please Register as a citizen before registering as a Government Monitor','error')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('register'))
                 else:
                     user = User(res[0])
@@ -142,6 +159,8 @@ def register_role(role):
                             """,[form.email.data,form.password.data,role])
                     conn.commit()
                     flash('Registration Successful','Success')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('login'))
             elif role == 'admin':
                 db.execute("""
@@ -152,6 +171,8 @@ def register_role(role):
                 res = db.fetchall()
                 if len(res) == 0:
                     flash('Please Register as a citizen before registering as an Admin','error')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('register'))
                 else:
                     user = User(res[0])
@@ -160,9 +181,13 @@ def register_role(role):
                             """,[form.email.data,form.password.data,role])
                     conn.commit()
                     flash('Registration Successful','Success')
+                    db.close()
+                    conn.close()
                     return redirect(url_for('login'))
             else:
                 flash('Invalid Registration Role','error')
+                db.close()
+                conn.close()
                 return redirect(url_for('register'))
     else:
         print("Role Registration Error : ",form.errors)

@@ -6,34 +6,25 @@ from Project.Citizen.citizen import citizen_bp
 from Project.Employee.employee import employee_bp
 from Project.Government.government import government_bp
 
+DB_NAME = "22CS10036"
+DB_USER = "22CS10036"
+DB_PASSWORD = "kmb2003"
+DB_HOST = "10.5.18.70"
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'grampanchayatksdkar37ro8hf83fh3892hmfijw38fh'
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=20)
 app.config['SECURITY_PASSWORD_SALT']='email-confirmation-for-a-new-user//projectzetaX//23jnrxnl4r'
 app.config['FLASK_ADMIN_SWATCH'] = 'cosmo'
+app.config['DB_NAME'] = DB_NAME
+app.config['DB_USER'] = DB_USER
+app.config['DB_PASSWORD'] = DB_PASSWORD
+app.config['DB_HOST'] = DB_HOST
 
 # Register Blueprints
 app.register_blueprint(admin_bp)
 app.register_blueprint(citizen_bp)
 app.register_blueprint(employee_bp)
 app.register_blueprint(government_bp)
-
-DB_NAME = "22CS10036"
-DB_USER = "22CS10036"
-DB_PASSWORD = "kmb2003"
-DB_HOST = "10.5.18.70"
-
-# connect to database
-try:
-    conn = psycopg2.connect(database=DB_NAME,
-                            user=DB_USER,
-                            password=DB_PASSWORD,
-                            host=DB_HOST)
-    print("Database connected successfully")
-except:
-    print("Database not connected successfully")
-
-# creating a cursor
-db = conn.cursor() 
 
 from Project import routes
