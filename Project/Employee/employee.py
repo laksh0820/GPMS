@@ -33,11 +33,11 @@ def base():
 @employee_required
 def taxes():
     table = "Overdue Taxes"
-    columns = ['ID', 'Name', 'Tax Type', 'Tax Year', 'Amount Due (Rs)', 'Due Date', 'Status']
+    columns = ['ID', 'Name', 'Tax Type', 'Tax Month', 'Tax Year', 'Amount Due (Rs)', 'Due Date', 'Status']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
-                SELECT tax_id, name, type, tax_year, amount_due, due_date, status
+                SELECT tax_id, name, type, tax_month, tax_year, amount_due, due_date, status
                 FROM Taxes JOIN Citizen ON Taxes.citizen_id = Citizen.citizen_id
                 WHERE status = 'Unpaid' AND due_date < CURRENT_DATE;
                """)
@@ -73,7 +73,6 @@ def welfare_schemes():
                 FROM Welfare_Scheme;
                """)
 
-    
     form = SaveForm()
     if form.validate_on_submit():
         # Process existing rows
@@ -119,105 +118,322 @@ def welfare_schemes():
 @login_required
 @employee_required
 def vaccinations():
-    table = "Administered Vaccines"
-    columns = ['Vaccine Type']
+    table = "Available Vaccines"
+    columns = ['ID', 'Vaccine Type', 'Centers']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
-                SELECT DISTINCT vaccine_type
-                FROM Vaccination;
+                SELECT *
+                FROM Vaccines;
                """)
+
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Vaccines
+                            WHERE vaccine_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Vaccines
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Vaccines
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.vaccinations'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Vaccinations', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Vaccinations', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/services', methods=['GET','POST'])
 @login_required
 @employee_required
 def services():
-    table = ""
-    columns = ['', '']
+    table = "Official Document Services"
+    columns = ['ID', 'Document Type', 'Description']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
+                SELECT *
+                FROM Service;
                """)
+
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Service
+                            WHERE doc_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Service
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Service
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.services'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Services', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Services', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/expenditures', methods=['GET','POST'])
 @login_required
 @employee_required
 def expenditures():
-    table = ""
-    columns = ['', '']
+    table = "Panchayat Expenditures"
+    columns = ['ID', 'Expense Type', 'Description']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
+                SELECT *
+                FROM Expenditures;
                """)
+
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Expenditures
+                            WHERE bill_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Expenditures
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Expenditures
+                            VALUES (%s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.expenditures'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Expenditures', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Expenditures', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/assets', methods=['GET','POST'])
 @login_required
 @employee_required
 def assets():
-    table = ""
-    columns = ['', '']
+    table = "Panchayat Owned Assets"
+    columns = ['ID', 'Asset Type', 'Location', 'Installation Date']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
+                SELECT *
+                FROM Asset;
                """)
-    res = db.fetchall()
-    db.close()
-    conn.close()
-    return render_template('employee_content.html', page = 'Assets', table_name = table, columns = columns, data = res)
 
-@employee_bp.route('/agriculture', methods=['GET','POST'])
-@login_required
-@employee_required
-def agriculture():
-    table = ""
-    columns = ['', '']
-    conn = get_db_connection()
-    db = conn.cursor()
-    db.execute("""
-               """)
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Asset
+                            WHERE asset_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Asset
+                            VALUES (%s, %s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Asset
+                            VALUES (%s, %s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.assets'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Agricultural Data', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Assets', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/census', methods=['GET','POST'])
 @login_required
 @employee_required
 def census():
-    table = ""
-    columns = ['', '']
+    table = "Village Census Data"
+    columns = ['ID', 'Year', 'Male Population', 'Female Population', 'Male Births', 'Female Births', 'Male Deaths', 'Female Deaths', 'Marriages']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
+                SELECT *
+                FROM Census_Data;
                """)
+
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Census_Data
+                            WHERE data_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Census_Data
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Census_Data
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.census'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Census Records', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Census Records', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/environment', methods=['GET','POST'])
 @login_required
 @employee_required
 def environment():
-    table = ""
-    columns = ['', '']
+    table = "Environmental Pollution Measures"
+    columns = ['ID', 'Date', 'Air Quality Index', 'Water Quality', 'Sanitation']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
+                SELECT *
+                FROM Environmental_Data;
                """)
+
+    form = SaveForm()
+    if form.validate_on_submit():
+        # Process existing rows
+        for key, value in request.form.items():
+            if key.startswith('index_') and not key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[1]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                db.execute("""
+                            DELETE FROM Environmental_Data
+                            WHERE data_id = %s;
+                           """, [row_id])
+                db.execute("""
+                            INSERT INTO Environmental_Data
+                            VALUES (%s, %s, %s, %s, %s);
+                           """, temp_list)
+
+        # Process new rows
+        for key, value in request.form.items():
+            if key.startswith('index_new_'):
+                temp_list = []
+                row_id = key.split('_')[2]
+                temp_list.append(row_id)
+                for i in range(2, len(columns) + 1):
+                    temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
+                db.execute("""
+                            INSERT INTO Environmental_Data
+                            VALUES (%s, %s, %s, %s, %s);
+                           """, temp_list)
+        conn.commit()
+        db.close()
+        conn.close()
+        return redirect(url_for('employee.environment'))
+    
     res = db.fetchall()
     db.close()
     conn.close()
-    return render_template('employee_content.html', page = 'Environmental Data', table_name = table, columns = columns, data = res)
+    return render_template('employee_content.html', page = 'Environmental Data', table_name = table, columns = columns, data = res, form = form)

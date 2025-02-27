@@ -64,10 +64,11 @@ db.execute("""
         tax_id SERIAL PRIMARY KEY,
         citizen_id INT,  
         type VARCHAR(50),
+        tax_month INT CHECK (tax_month >= 1 AND tax_month <= 12), 
         tax_year INT,
         amount_due DECIMAL(12,2),
-        due_data Date,
-        status VARCHAR(20),
+        due_date Date,
+        status VARCHAR(20) NOT NULL CHECK (status IN ('Paid', 'Unpaid')),
         foreign key (citizen_id) references Citizen
     );
     """)
@@ -76,11 +77,9 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Asset (
         asset_id SERIAL PRIMARY KEY,
-        employee_id INT,
         type VARCHAR(50),
         location VARCHAR(50),
-        installation_date DATE,
-        foreign key (employee_id) references Panchayat_Employee
+        installation_date DATE
     );
     """)
 
@@ -152,7 +151,8 @@ db.execute("""
         data_id SERIAL PRIMARY KEY,
         date DATE,
         air_quality_index INT,
-        water_quality VARCHAR(100)  
+        water_quality VARCHAR(100),
+        sanitation VARCHAR(100)   
     );
     """)
 
@@ -181,14 +181,14 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Census_Data (
         data_id SERIAL PRIMARY KEY,
+        year INT,
         population_male INT,
         population_female INT,
         births_male INT,
         births_female INT,
         deaths_male INT,
         deaths_female INT,
-        marriages INT,
-        date_collected DATE
+        marriages INT
     );
     """)
 
