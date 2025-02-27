@@ -23,7 +23,7 @@ def base():
     # Gather Information of Land covered by each crop type and Average Land covered by each crop type
     db.execute("""
                SELECT crop_type, avg(area_acres), sum(area_acres)
-               FROM land_records
+               FROM land_record
                GROUP BY crop_type;
             """)
     res = db.fetchall()
@@ -35,9 +35,9 @@ def base():
 
 
     # Gather Information of Average Land covered by a household in the village
-    db.execute("""
+    # db.execute("""
 
-               """)
+    #            """)
     
     db.close()
     conn.close()
