@@ -15,12 +15,12 @@
     <div class="container">
         {% for message in get_flashed_messages(with_categories = True) %}
         {% if message|first == "error" %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px; z-index: 999; position: absolute; width: 100%; transition: opacity 1s;">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px; z-index: 999; position: absolute; width: 80%; margin-right: 20%; transition: opacity 1s;">
                 {{ message[1] }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% else %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px; z-index: 999; position: absolute; width: 100%; transition: opacity 1s;">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px; z-index: 999; position: absolute; width: 80%; margin-right: 20%; transition: opacity 1s;">
                 {{ message[1] }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
