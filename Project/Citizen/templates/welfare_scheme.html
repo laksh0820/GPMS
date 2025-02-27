@@ -1,5 +1,33 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'dashboard.html' %}
+{% block main_content %}
+
+{% if request_type == 'User' %}
+<style>
+    /* Adjust column widths */
+    th:nth-child(1) {
+        width: 15%; /* Set width for the first column */
+    }
+
+    th:nth-child(2) {
+        width: 20%; /* Set width for the second column */
+    }
+
+    th:nth-child(3) {
+        width: 65%; /* Set width for the third column */
+    }
+</style>
+{% else %}
+<style>
+    /* Adjust column widths */
+    th:nth-child(1) {
+        width: 20%; /* Set width for the second column */
+    }
+
+    th:nth-child(2) {
+        width: 80%; /* Set width for the third column */
+    }
+</style>
+{% endif %}
 
 <br/>
 <div>
@@ -8,6 +36,9 @@
     <table>
         <thead>
             <tr>
+                {% if request_type == 'User' %}
+                <th>Enrollment Date</th>
+                {% endif %}
                 <th>Scheme Title</th>
                 <th>Scheme Description</th>
             </tr>
@@ -15,6 +46,9 @@
         <tbody>
             {% for scheme in scheme_title %}
             <tr>
+                {% if request_type == 'User' %}
+                <th>{{ enrollment_date[loop.index0] }}</th>
+                {% endif %}
                 <th>{{ scheme }}</th>
                 <td>{{ scheme_description[loop.index0] }}</td>
             </tr>

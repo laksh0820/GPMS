@@ -1,7 +1,45 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
+{% block main_content %}
 
-{% block content %}
+<style>
+    /* Adjust column widths */
+    th:nth-child(1) {
+        width: 15%; /* Set width for the first column */
+    }
 
-<p>Citizen Service</p>
+    th:nth-child(2) {
+        width: 20%; /* Set width for the second column */
+    }
+
+    th:nth-child(3) {
+        width: 65%; /* Set width for the third column */
+    }
+</style>
+
+<br/>
+<div>
+    <h1>Service</h1>
+    <div>  
+    <table>
+        <thead>
+            <tr>                
+                <th>Issued Date</th>
+                <th>Doc Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in doc_type %}
+            <tr>
+                <th>{{ issue_date[loop.index0] }}</th>
+                <td>{{ type }}</td>
+                <td>{{ description[loop.index0] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
 
 {% endblock %}

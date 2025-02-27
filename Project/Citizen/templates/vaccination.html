@@ -1,5 +1,33 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'dashboard.html' %}
+{% block main_content %}
+
+{% if request_type == 'User' %}
+<style>
+    /* Adjust column widths */
+    th:nth-child(1) {
+        width: 33%; /* Set width for the first column */
+    }
+
+    th:nth-child(2) {
+        width: 33%; /* Set width for the second column */
+    }
+
+    th:nth-child(3) {
+        width: 33%; /* Set width for the third column */
+    }
+</style>
+{% else %}
+<style>
+    /* Adjust column widths */
+    th:nth-child(1) {
+        width: 50%; /* Set width for the second column */
+    }
+
+    th:nth-child(2) {
+        width: 50%; /* Set width for the third column */
+    }
+</style>
+{% endif %}
 
 <br/>
 <div>
@@ -7,16 +35,22 @@
     <div>  
     <table>
         <thead>
-            <tr>
+            <tr>                
+                {% if request_type == 'User' %}
                 <th>Date Administered</th>
-                <th>Vaccination Type</th>
+                {% endif %}
+                <th>Vaccine Type</th>
+                <th>Center</th>
             </tr>
         </thead>
         <tbody>
             {% for type in vaccination_type %}
             <tr>
+                {% if request_type == 'User' %}
                 <th>{{ date_administered[loop.index0] }}</th>
+                {% endif %}
                 <td>{{ type }}</td>
+                <td>{{ centers[loop.index0] }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,78 @@
+/* Container for sidebar and main content */
+.container {
+    font-family: Arial, sans-serif;
+    display: inline;
+    padding-left: 0px;
+    height: 100%;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px; /* Width of the sidebar */
+    background-color: #333; /* Dark background */
+    color: white; /* Text color */
+    padding: 20px;
+    padding-top: 100px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    height: 100vh; /* Full height of the viewport */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Sidebar links */
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+/* Hover effect for sidebar links */
+.sidebar a:hover {
+    background-color: #555; /* Lighten background on hover */
+}
+
+/* Main content area */
+.main-content {
+    margin-left: 250px;
+    position: fixed;
+    width: 83.5%;
+    height: 100%;
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background */
+}
+
+.collapsed {
+    width: 50px; /* Collapsed width */
+    overflow: hidden; /* Hide text when collapsed */
+}
+
+.dropdown-content {
+    display: none;
+    padding-left: 20px;
+}
+
+.dropdown-content.active{
+    display: block;
+}
+
+/* Add a border to the table and its cells */
+table {
+    width: 100%; /* Full width of the container */
+    border-collapse: collapse; /* Merge cell borders */
+    border: 2px solid #333; /* Outline for the table */
+}
+
+th, td {
+    border: 1px solid #333; /* Border for table cells */
+    padding: 8px; /* Add padding for better spacing */
+    text-align: center; /* Align text to the left */
+}
+
+th {
+    background-color: #f2f2f2; /* Light gray background for headers */
+    width: 1px;
+}
