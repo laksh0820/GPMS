@@ -6,7 +6,6 @@ from Project.utils.db_utils import get_db_connection
 
 employee_bp = Blueprint('employee', __name__, url_prefix='/employee', template_folder = 'templates', static_folder='static')
 
-# Flask-WTF forms
 class UpdateStatusForm(FlaskForm):
     submit = SubmitField('Mark as Paid')
 
@@ -83,14 +82,18 @@ def welfare_schemes():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Welfare_Scheme
-                            WHERE scheme_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Welfare_Scheme
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Welfare_Scheme
+                                WHERE scheme_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Welfare_Scheme
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -100,11 +103,15 @@ def welfare_schemes():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Welfare_Scheme
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Welfare_Scheme
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.welfare_schemes'))
@@ -137,14 +144,18 @@ def vaccinations():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Vaccines
-                            WHERE vaccine_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Vaccines
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Vaccines
+                                WHERE vaccine_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Vaccines
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -154,11 +165,15 @@ def vaccinations():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Vaccines
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Vaccines
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.vaccinations'))
@@ -191,14 +206,18 @@ def services():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Service
-                            WHERE doc_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Service
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Service
+                                WHERE doc_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Service
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -208,11 +227,15 @@ def services():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Service
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Service
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.services'))
@@ -245,14 +268,18 @@ def expenditures():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Expenditures
-                            WHERE bill_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Expenditures
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Expenditures
+                                WHERE bill_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Expenditures
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -262,11 +289,15 @@ def expenditures():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Expenditures
-                            VALUES (%s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Expenditures
+                                VALUES (%s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.expenditures'))
@@ -299,14 +330,18 @@ def assets():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Asset
-                            WHERE asset_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Asset
-                            VALUES (%s, %s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Asset
+                                WHERE asset_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Asset
+                                VALUES (%s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -316,11 +351,15 @@ def assets():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Asset
-                            VALUES (%s, %s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Asset
+                                VALUES (%s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.assets'))
@@ -353,14 +392,18 @@ def census():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Census_Data
-                            WHERE data_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Census_Data
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Census_Data
+                                WHERE data_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Census_Data
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -370,11 +413,15 @@ def census():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Census_Data
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Census_Data
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.census'))
@@ -407,14 +454,18 @@ def environment():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                db.execute("""
-                            DELETE FROM Environmental_Data
-                            WHERE data_id = %s;
-                           """, [row_id])
-                db.execute("""
-                            INSERT INTO Environmental_Data
-                            VALUES (%s, %s, %s, %s, %s);
-                           """, temp_list)
+                try:
+                    db.execute("""
+                                DELETE FROM Environmental_Data
+                                WHERE data_id = %s;
+                               """, [row_id])
+                    db.execute("""
+                                INSERT INTO Environmental_Data
+                                VALUES (%s, %s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
 
         # Process new rows
         for key, value in request.form.items():
@@ -424,11 +475,15 @@ def environment():
                 temp_list.append(row_id)
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
-                db.execute("""
-                            INSERT INTO Environmental_Data
-                            VALUES (%s, %s, %s, %s, %s);
-                           """, temp_list)
-        conn.commit()
+                try:
+                    db.execute("""
+                                INSERT INTO Environmental_Data
+                                VALUES (%s, %s, %s, %s, %s);
+                               """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+
         db.close()
         conn.close()
         return redirect(url_for('employee.environment'))
