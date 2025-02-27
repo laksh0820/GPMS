@@ -72,9 +72,7 @@ def welfare_schemes():
                 SELECT *
                 FROM Welfare_Scheme;
                """)
-    res = db.fetchall()
-    db.close()
-    conn.close()
+
     
     form = SaveForm()
     if form.validate_on_submit():
@@ -112,6 +110,9 @@ def welfare_schemes():
         conn.close()
         return redirect(url_for('employee.welfare_schemes'))
     
+    res = db.fetchall()
+    db.close()
+    conn.close()
     return render_template('employee_content.html', page = 'Welfare Schemes', table_name = table, columns = columns, data = res, form = form)
 
 @employee_bp.route('/vaccinations', methods=['GET','POST'])
