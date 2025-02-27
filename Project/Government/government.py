@@ -17,38 +17,29 @@ def government_monitor_required(inner_func):
 @login_required
 @government_monitor_required
 def base():
-    return render_template('Government/dashboard.html')
-
-@government_bp.route('/agricultural_data')
-@login_required
-@government_monitor_required
-def agricultural_data():
     conn = get_db_connection()
     db = conn.cursor()
-    
+
+    # Gather Information of Land covered by each crop type and Average Land covered by each crop type
     db.execute("""
-               SELECT * 
-               from land_records;
+               SELECT crop_type, avg(area_acres), sum(area_acres)
+               FROM land_records
+               GROUP BY crop_type;
             """)
     res = db.fetchall()
 
+    # Extracting relevant information
+    crop_type = [row[0] for row in res]
+    avg_area_acres = [row[1] for row in res]
+    total_area_acres = [row[2] for row in res]
+
+
+    # Gather Information of Average Land covered by a household in the village
+    db.execute("""
+
+               """)
     
-    pass
+    db.close()
+    conn.close()
 
-@government_bp.route('/vaccination')
-@login_required
-@government_monitor_required
-def vaccination():
-    pass
-
-@government_bp.route('/census_data')
-@login_required
-@government_monitor_required
-def census_data():
-    pass
-
-@government_bp.route('/environmental_data')
-@login_required
-@government_monitor_required
-def environmental_data():
-    pass
+    return render_template('Government/dashboard.html')
