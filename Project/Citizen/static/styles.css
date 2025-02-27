@@ -1,3 +1,8 @@
+h1{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
 /* Container for sidebar and main content */
 .container {
     font-family: Arial, sans-serif;
@@ -41,7 +46,7 @@
     position: fixed;
     width: 83.5%;
     height: 100%;
-    padding: 20px;
+    padding: 50px;
     background-color: #f4f4f4; /* Light background */
 }
 
