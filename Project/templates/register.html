@@ -1,10 +1,34 @@
 {% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static',filename='CSS/style-register.css') }}">
+{% endblock %}
+
 {% block content %}
 
-    <br/><br/>
-    <h1>Role of User</h1>
-    <a href="/register_role/citizen">Citizen</a><br/>
-    <a href="/register_role/employee">Employee</a><br/>
-    <a href="/register_role/admin">Admin</a><br/>
-    <a href="/register_role/government">Government</a>
+<title>Left Sidebar</title>
+<div class="container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <h2>Role of User</h2><br/>
+        <a href="/register_role/citizen">Citizen</a>
+        <a href="/register_role/employee">Employee</a>
+        <a href="/register_role/admin">Admin</a>
+        <a href="/register_role/government">Government</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block main_content %}
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('collapsed');
+    }
+</script>
+    
 {% endblock %}
