@@ -22,16 +22,6 @@ db = conn.cursor()
 
 # Creating Tables
 
-# Create Household Table
-db.execute("""
-    CREATE TABLE IF NOT EXISTS Household (
-        household_id INT,
-        address VARCHAR(50),
-        income DECIMAL(12,2),
-        primary key (household_id)
-    );
-    """)
-
 # Create Citizen Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Citizen (
@@ -39,10 +29,9 @@ db.execute("""
         name VARCHAR(50),
         gender VARCHAR(10),
         dob DATE,
-        household_id INT,
+        income DECIMAL(12,2),
         educational_qualification VARCHAR(20),
-        primary key (citizen_id),
-        foreign key (household_id) references Household
+        primary key (citizen_id)
     );
     """)
 
@@ -53,7 +42,8 @@ db.execute("""
         email VARCHAR(100) NOT NULL,
         password VARCHAR(200) NOT NULL,
         citizen_id INT,
-        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'panchayat_employee', 'citizen', 'government')),
+        role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'employee', 'citizen', 'government')),
+        is_verified BOOLEAN NOT NULL DEFAULT FALSE,
         foreign key (citizen_id) references Citizen
     );
     """)
@@ -105,14 +95,64 @@ db.execute("""
     );
     """)
 
+# Create Vaccines Table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Vaccines (
+        vaccine_id SERIAL PRIMARY KEY,
+        vaccine_type VARCHAR(50),
+        centers VARCHAR(50)  
+    );
+    """)
+
 # Create Vaccination Table
 db.execute("""
     CREATE TABLE IF NOT EXISTS Vaccination (
         vaccination_id SERIAL PRIMARY KEY,
         citizen_id INT,
-        vaccine_type VARCHAR(50),
+        vaccine_id INT,
         date_administered DATE,
-        foreign key (citizen_id) references Citizen
+        foreign key (citizen_id) references Citizen,
+        foreign key (vaccine_id) references Vaccines
+    );
+    """)
+
+# Create Service Table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Service (
+        doc_id SERIAL PRIMARY KEY,
+        doc_type VARCHAR(100),
+        description VARCHAR(100)    
+    );
+    """)
+
+# Create Document Table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Documents (
+        issue_id SERIAL PRIMARY KEY,
+        citizen_id INT,
+        doc_id INT,
+        issue_date DATE,
+        foreign key (citizen_id) references Citizen,
+        foreign key (doc_id) references Service 
+    );
+    """)
+
+# Create Expenditure Table
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Expenditures (
+        bill_id SERIAL PRIMARY KEY,
+        expense_type VARCHAR(100),
+        description VARCHAR(100)  
+    );
+    """)
+
+# Create Environmental Data
+db.execute("""
+    CREATE TABLE IF NOT EXISTS Environmental_Data (
+        data_id SERIAL PRIMARY KEY,
+        date DATE,
+        air_quality_index INT,
+        water_quality VARCHAR(100)  
     );
     """)
 
@@ -141,16 +181,18 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Census_Data (
         data_id SERIAL PRIMARY KEY,
-        household_id INT,
-        citizen_id INT,
-        event_type VARCHAR(50),
-        event_date DATE,
-        foreign key (household_id) references Household,
-        foreign key (citizen_id) references Citizen
+        population_male INT,
+        population_female INT,
+        births_male INT,
+        births_female INT,
+        deaths_male INT,
+        deaths_female INT,
+        marriages INT,
+        date_collected DATE
     );
     """)
-conn.commit()
 
+conn.commit()
 db.close()
 conn.close()
 

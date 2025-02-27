@@ -4,6 +4,7 @@ from Project.utils.db_utils import get_db_connection
 
 citizen_bp = Blueprint('citizen',__name__,url_prefix='/citizen', template_folder='templates')
 
+# Wrapper to ensure only citizen can access the page
 def citizen_required(inner_func):
     def wrapped_function_citizen(*args,**kwargs):
         if (current_user.is_authenticated) and (current_user.role != 'citizen' and current_user.role != 'admin'):
@@ -13,10 +14,21 @@ def citizen_required(inner_func):
     wrapped_function_citizen.__name__ = inner_func.__name__
     return wrapped_function_citizen
 
+# Wrapper to ensure that the user in verified
+def verification_required(inner_func):
+    def wrapper(*args,**kwargs):
+        if current_user.is_verified == False:
+            flash("Please wait for 24 hours until Admin verifies you",'warning')
+            return redirect(url_for('base'))
+        return inner_func(*args,**kwargs)
+    wrapper.__name__ = inner_func.__name__
+    return wrapper
+
 # Dashboard for citizen
 @citizen_bp.route('/')
 @login_required
 @citizen_required
+# @verification_required
 def base():
     return render_template('dashboard.html')
 
@@ -24,6 +36,7 @@ def base():
 @citizen_bp.route('/welfare_scheme')
 @login_required
 @citizen_required
+# @verification_required
 def welfare_scheme():
     conn = get_db_connection()
     db = conn.cursor()
@@ -45,6 +58,7 @@ def welfare_scheme():
 @citizen_bp.route('/vaccination')
 @login_required
 @citizen_required
+# @verification_required
 def vaccination():
     conn = get_db_connection()
     db = conn.cursor()
@@ -67,6 +81,7 @@ def vaccination():
 @citizen_bp.route('/taxes')
 @login_required
 @citizen_required
+# @verification_required
 def taxes():
     conn = get_db_connection()
     db = conn.cursor()
@@ -92,5 +107,6 @@ def taxes():
 @citizen_bp.route('/service')
 @login_required
 @citizen_required
+# @verification_required
 def service():
     return render_template('service.html')

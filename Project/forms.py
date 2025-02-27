@@ -19,7 +19,7 @@ class LogInForm(FlaskForm):
     email = StringField("Email",validators=[DataRequired(),Email(message="Invalid email address (should be of the form something@example.com)")])
     password = PasswordField("Password",validators=[DataRequired()])
     role = RadioField("Role",validators=[DataRequired()],choices=[('citizen','citizen'),
-                                                                  ('panchayat_employee','panchayat_employee'),
+                                                                  ('employee','employee'),
                                                                   ('government','government'),
                                                                   ('admin','admin')])
     remember_me = BooleanField("Remember Me")
@@ -30,12 +30,10 @@ class CitizenForm(UserForm):
     gender = RadioField("Gender",validators=[DataRequired()],choices=[('male','male'),('female','female')])
     dob = DateField("Date",validators=[DataRequired()],format='%Y-%m-%d')
     educational_qualification = StringField("Educational Qualification",validators=[DataRequired()])
-    household_id = IntegerField("Household-ID",validators=[DataRequired()])
-    address = StringField("Address",validators=[DataRequired()])
     income = FloatField("Income",validators=[DataRequired()])
     submit = SubmitField("Submit")
     
-class PanchayatEmployeeForm(UserForm):
+class EmployeeForm(UserForm):
     role = StringField("Role",validators=[DataRequired()])
     submit = SubmitField("Submit")
 

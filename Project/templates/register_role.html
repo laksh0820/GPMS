@@ -43,18 +43,10 @@
             {{ form.educational_qualification(class="form-control",placeholder="Enter your educational qualification") }}
             <br/>
 
-            {{ form.household_id.label(class="form-label") }}
-            {{ form.household_id(class="form-control") }}
-            <br/>
-
-            {{ form.address.label(class="form-label") }}
-            {{ form.address(class="form-control") }}
-            <br/>
-
             {{ form.income.label(class="form-label") }}
             {{ form.income(class="form-control") }}
             <br/>
-        {% elif role == 'panchayat_employee' %}
+        {% elif role == 'employee' %}
             {{ form.role.label(class='form-label') }}
             {{ form.role(class='form-control',placeholder="Enter Your role in the Panchayat committee") }}
             <br/>

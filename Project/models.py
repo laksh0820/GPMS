@@ -26,6 +26,7 @@ class User(UserMixin):
         self.password = data[2]
         self.citizen_id = data[3]
         self.role = data[4]
+        self.is_verified = data[5]
     
     def get_id(self):
         return self.user_id

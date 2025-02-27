@@ -3,3 +3,6 @@
     background: #007bff;
     color: aliceblue;
 }
+nav{
+    z-index: 2;
+}

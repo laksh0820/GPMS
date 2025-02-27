@@ -1,7 +1,7 @@
 from flask import Flask,render_template,redirect,url_for,flash, request
 from flask_login import login_user,login_required,current_user,logout_user
 from Project import app
-from Project.forms import LogInForm,CitizenForm,PanchayatEmployeeForm,GovernmentForm,AdminForm
+from Project.forms import LogInForm,CitizenForm,EmployeeForm,GovernmentForm,AdminForm
 from Project.models import User
 from Project.utils.db_utils import get_db_connection
 
@@ -38,7 +38,7 @@ def login():
                 conn.close()
                 if form.role.data == 'citizen':
                     return redirect(url_for('citizen.base'))
-                elif form.role.data == 'panchayat_employee':
+                elif form.role.data == 'employee':
                     return redirect(url_for('employee.base'))
                 elif form.role.data == 'government':
                     return redirect(url_for('government.base'))
@@ -70,8 +70,8 @@ def register():
 def register_role(role):
     if role == 'citizen':
         form = CitizenForm()
-    elif role == 'panchayat_employee':
-        form = PanchayatEmployeeForm()
+    elif role == 'employee':
+        form = EmployeeForm()
     elif role == 'government':
         form = GovernmentForm()
     elif role == 'admin':
@@ -97,16 +97,6 @@ def register_role(role):
         else:
             if role == 'citizen':
                 db.execute("""
-                           SELECT * 
-                           from household
-                           where household_id = %s;
-                        """,[form.household_id.data])
-                res = db.fetchall()
-                if len(res) == 0:
-                    db.execute("""
-                            insert into household(household_id,address,income) values (%s,%s,%s);
-                            """,[form.household_id.data,form.address.data,form.income.data])
-                db.execute("""
                         SELECT case
                                 when max(citizen_id) is not null then max(citizen_id)
                                 else 0
@@ -116,8 +106,8 @@ def register_role(role):
                 res = db.fetchall()
                 citizen_id = res[0][0] + 1
                 db.execute("""
-                        insert into citizen(citizen_id,name,gender,dob,household_id,educational_qualification) values (%s,%s,%s,%s,%s,%s);
-                        """,[citizen_id,form.name.data,form.gender.data,form.dob.data,form.household_id.data,form.educational_qualification.data])
+                        insert into citizen(citizen_id,name,gender,dob,income,educational_qualification) values (%s,%s,%s,%s,%s,%s);
+                        """,[citizen_id,form.name.data,form.gender.data,form.dob.data,form.income.data,form.educational_qualification.data])
                 db.execute("""
                         insert into users(email,password,citizen_id,role) values (%s,%s,%s,%s);
                         """,[form.email.data,form.password.data,citizen_id,role])
@@ -126,7 +116,7 @@ def register_role(role):
                 db.close()
                 conn.close()
                 return redirect(url_for('login'))
-            elif role == 'panchayat_employee':
+            elif role == 'employee':
                 db.execute("""
                         SELECT *
                         from users
