@@ -5,30 +5,25 @@
 {% endblock %}
 
 {% block content %}
-<title>Left Sidebar</title>
-<div class="container">
-    <!-- Left Sidebar -->
-    <div class="sidebar">
-        <h2>Citizen Dashboard</h2>
-        <a href='#' class='dropdown-toggle'>Welfare Scheme</a>
-        <div class="dropdown-content">
-            <a href='{{ url_for("citizen.welfare_scheme", request_type='Active') }}'>Active Schemes</a>
-            <a href='{{ url_for("citizen.welfare_scheme", request_type='User') }}'>My Schemes</a>
-        </div>
-        <a href='#' class='dropdown-toggle'>Vaccination</a>
-        <div class="dropdown-content">
-            <a href='{{ url_for("citizen.vaccination", request_type='Active') }}'>Active Vaccines</a>
-            <a href='{{ url_for("citizen.vaccination", request_type='User') }}'>My Vaccination</a>
-        </div>
-        <a href='{{ url_for("citizen.taxes") }}'>Taxes</a>
-        <a href='{{ url_for("citizen.service") }}'>Service</a>
+<div class="sidebar">
+    <h2>Citizen Dashboard</h2>
+    <a href='#' class='dropdown-toggle'>Welfare Scheme</a>
+    <div class="dropdown-content">
+        <a href='{{ url_for("citizen.welfare_scheme", request_type='Active') }}'>Active Schemes</a>
+        <a href='{{ url_for("citizen.welfare_scheme", request_type='User') }}'>My Schemes</a>
     </div>
+    <a href='#' class='dropdown-toggle'>Vaccination</a>
+    <div class="dropdown-content">
+        <a href='{{ url_for("citizen.vaccination", request_type='Active') }}'>Active Vaccines</a>
+        <a href='{{ url_for("citizen.vaccination", request_type='User') }}'>My Vaccination</a>
+    </div>
+    <a href='{{ url_for("citizen.taxes") }}'>Taxes</a>
+    <a href='{{ url_for("citizen.service") }}'>Service</a>
+</div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        {% block main_content %}
-        {% endblock %}
-    </div>
+<div class="main-content">
+    {% block main_content %}
+    {% endblock %}
 </div>
 
 <script>

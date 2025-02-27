@@ -13,7 +13,6 @@
   <body class="bg-secondary-subtle text-primary-emphasis">
     {% include 'navbar.html' %}
     <div class="container">
-    </br>
         {% for message in get_flashed_messages(with_categories = True) %}
         {% if message|first == "error" %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
