@@ -6,36 +6,38 @@
 
 {% block content %}
 
-	<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="nav nav-tabs me-auto mb-2 mb-lg-0">
-
-				</ul>
-			</div>
-		</div>
-	</nav> -->
-
 	<br>
 	<h1>Government Monitor Dashboard</h1>
 	<div class="container-fluid">
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<a class="nav-link" aria-selected="true" href="{{ url_for('government.agricultural_data')}}">Agricultural Data</a>
+		<ul class="nav nav-tabs nav-fill mb-3" id="data-navbar" role="tablist">
+			<li class="nav-item active" role="presentation">
+				<a class="nav-link active" id="agricultural-data-tab" role="tab" data-bs-toggle="tab" href="#agricultural-data-tabs">Agricultural Data</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{ url_for('government.vaccination')}}">Vaccinations</a>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" id="vaccination-tab" role="tab" data-bs-toggle="tab" href="#vaccination-tabs">Vaccinations</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{ url_for('government.census_data')}}">Census Data</a>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" id="census-data-tab" role="tab" data-bs-toggle="tab" href="#census-data-tabs">Census Data</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{ url_for('government.environmental_data')}}">Environmental Data</a>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" id="environmental-data-tab" role="tab" data-bs-toggle="tab" href="#environmental-data-tabs">Environmental Data</a>
 			</li>
 		</ul>
+
+		<div class="tab-content" id="data1-content">
+			<div class="tab-pane fade show active" id="agricultural-data-tabs">
+				Agricultural Data Content
+			</div>
+			<div class="tab-pane fade" id="vaccination-tabs">
+				Vaccinations Content
+			</div>
+			<div class="tab-pane fade" id="census-data-tabs">
+				Census Data Content
+			</div>
+			<div class="tab-pane fade" id="environmental-data-tabs">
+				Environmental Data Content
+			</div>
+		</div>
 	</div>
 
 {% endblock %}
