@@ -3,6 +3,11 @@ const vac_tab = document.getElementById('vaccination-data-tab');
 const census_tab = document.getElementById('census-data-tab');
 const environment_tab = document.getElementById('environment-data-tab');
 
+function toFixed(value, precision) {
+    var power = Math.pow(10, precision || 0);
+    return String(Math.round(value * power) / power);
+}
+
 agri_tab.addEventListener('click', () => {
     $.ajax({
         url: '/government/refresh_agricultural_data',
@@ -19,8 +24,8 @@ agri_tab.addEventListener('click', () => {
             for (let i = 1; i < Math.min(crop_type.length+1, table_rows.length); i++)
             {
                 table_rows[i].getElementsByTagName('td')[0].innerHTML = crop_type[i-1];
-                table_rows[i].getElementsByTagName('td')[1].innerHTML = avg_area_acres[i-1];
-                table_rows[i].getElementsByTagName('td')[2].innerHTML = total_area_acres[i-1];
+                table_rows[i].getElementsByTagName('td')[1].innerHTML = toFixed(avg_area_acres[i-1],2);
+                table_rows[i].getElementsByTagName('td')[2].innerHTML = toFixed(total_area_acres[i-1],2);
             }
 
             // remove extra table rows if needed
@@ -40,11 +45,19 @@ agri_tab.addEventListener('click', () => {
                     let cell2 = new_row.insertCell(1);
                     let cell3 = new_row.insertCell(2);
                     cell1.innerHTML = crop_type[i-1];
-                    cell2.innerHTML = avg_area_acres[i-1];
-                    cell3.innerHTML = total_area_acres[i-1];
+                    cell2.innerHTML = toFixed(avg_area_acres[i-1],2);
+                    cell3.innerHTML = toFixed(total_area_acres[i-1],2);
                 }
             }
+            
+            let avg_area_acres_per_citizen = response['avg_area_acres_per_citizen'];
+            let avg_income_per_farmer = response['avg_income_per_farmer'];
 
+            let p1 = document.getElementById('avg-area-citizen-para');
+            let p2 = document.getElementById('avg-income-farmer-para');
+
+            p1.innerHTML = 'Average Area (in acres) held by a citizen in the village is close to ' + toFixed(avg_area_acres_per_citizen,2); 
+            p2.innerHTML = 'Average Income of a farmer in the village is close to ' + toFixed(avg_income_per_farmer,2);
 
             console.log('Agricultural data refreshed');
         }

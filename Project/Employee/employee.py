@@ -77,16 +77,16 @@ def welfare_schemes():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Welfare_Scheme
                                 WHERE scheme_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Welfare_Scheme
                                 VALUES (%s, %s, %s);
@@ -98,9 +98,9 @@ def welfare_schemes():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -139,16 +139,16 @@ def vaccinations():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Vaccines
                                 WHERE vaccine_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Vaccines
                                 VALUES (%s, %s, %s);
@@ -160,9 +160,9 @@ def vaccinations():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -201,16 +201,16 @@ def services():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Service
                                 WHERE doc_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Service
                                 VALUES (%s, %s, %s);
@@ -222,9 +222,9 @@ def services():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -263,16 +263,16 @@ def expenditures():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Expenditures
                                 WHERE bill_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Expenditures
                                 VALUES (%s, %s, %s);
@@ -284,9 +284,9 @@ def expenditures():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -325,16 +325,16 @@ def assets():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Asset
                                 WHERE asset_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Asset
                                 VALUES (%s, %s, %s, %s);
@@ -346,9 +346,9 @@ def assets():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -387,16 +387,16 @@ def census():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Census_Data
                                 WHERE data_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Census_Data
                                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
@@ -408,9 +408,9 @@ def census():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -449,16 +449,16 @@ def environment():
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[1]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 DELETE FROM Environmental_Data
                                 WHERE data_id = %s;
-                               """, [row_id])
+                               """, [temp_list[0]])
                     db.execute("""
                                 INSERT INTO Environmental_Data
                                 VALUES (%s, %s, %s, %s, %s);
@@ -470,9 +470,9 @@ def environment():
         # Process new rows
         for key, value in request.form.items():
             if key.startswith('index_new_'):
-                temp_list = []
                 row_id = key.split('_')[2]
-                temp_list.append(row_id)
+                temp_list = []
+                temp_list.append(request.form.get(f'index_new_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:

@@ -6,6 +6,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     text-align: center;
+    background-color: aliceblue;
 }
 
 table, th, td {

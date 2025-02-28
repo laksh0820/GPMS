@@ -1,0 +1,70 @@
+h2 {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.btn {
+    font-weight: bold;
+    color: #04AA6D;
+}
+
+.savebtn {
+    position: absolute;
+    left: 54%;
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.editable {
+    cursor: pointer;
+}
+
+.editable input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.sidebar {
+    font-size: large;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #2b3035;
+    padding-top: 100px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 10px 20px;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    display: block;
+  }
+  
+  .main {
+    margin-left: 200px;
+    padding: 20px;
+  }

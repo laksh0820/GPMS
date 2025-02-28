@@ -44,11 +44,22 @@ def refresh_agricultural_data():
     
 
     # Gather Information of average income of a farmer in the village
+    db.execute("""
+                SELECT avg(income)
+                FROM citizen JOIN land_record USING (citizen_id);
+                """)
+    res = db.fetchall()
+    avg_income_per_farmer = res[0][0]
+
 
     db.close()
     conn.close()
 
-    return jsonify({'crop_type':crop_type, 'avg_area_acres':avg_area_acres, 'total_area_acres':total_area_acres, 'avg_area_acres_per_citizen':avg_area_acres_per_citizen})
+    return jsonify({'crop_type':crop_type,
+                    'avg_area_acres':avg_area_acres,
+                    'total_area_acres':total_area_acres,
+                    'avg_area_acres_per_citizen':avg_area_acres_per_citizen,
+                    'avg_income_per_farmer':avg_income_per_farmer})
     
 
 
@@ -64,7 +75,7 @@ def base():
                 SELECT crop_type, avg(area_acres), sum(area_acres)
                 FROM land_record
                 GROUP BY crop_type;
-            """)
+                """)
     res = db.fetchall()
 
     # Extracting relevant information
@@ -77,14 +88,25 @@ def base():
     db.execute("""
                 SELECT avg(area_acres)
                 FROM land_record;
-            """)
+                """)
     res = db.fetchall()
     avg_area_acres_per_citizen = res[0][0]
     
 
     # Gather Information of average income of a farmer in the village
+    db.execute("""
+                SELECT avg(income)
+                FROM citizen JOIN land_record USING (citizen_id);
+                """)
+    res = db.fetchall()
+    avg_income_per_farmer = res[0][0]
 
     db.close()
     conn.close()
 
-    return render_template('Government/dashboard.html', crop_type=crop_type, avg_area_acres=avg_area_acres, total_area_acres=total_area_acres, avg_area_acres_per_citizen=avg_area_acres_per_citizen)
+    return render_template('Government/dashboard.html', 
+                           crop_type=crop_type, 
+                           avg_area_acres=avg_area_acres, 
+                           total_area_acres=total_area_acres, 
+                           avg_area_acres_per_citizen=avg_area_acres_per_citizen,
+                           avg_income_per_farmer=avg_income_per_farmer)

@@ -34,6 +34,8 @@
 
 {% else %}
 <script>
+    var id = {{ data | last | first }}; // ID of last data entry
+
     // Function to make a cell editable
     function makeEditable(cell) {
         var span = cell.querySelector('span');
@@ -53,6 +55,7 @@
         // Get the columns array length from the template
         var columns = {{ columns | tojson | safe }};
         var rowCount = table.rows.length;
+        id++;
 
         // Loop through the columns and create cells
         columns.forEach(
@@ -61,15 +64,15 @@
                 if (index == 0) {
                     // Add the index column (read-only)
                     cell.innerHTML = `
-                        <span>${rowCount}</span>
-                        <input type="hidden" name="index_new_${rowCount}" value="${rowCount}">
+                        <span>${id}</span>
+                        <input type="hidden" name="index_new_${rowCount}" value="${id}">
                     `;
                 } 
                 else {
                     // Add editable content for other columns
                     cell.innerHTML = `
                         <span>Click to edit</span>
-                        <input type="text" name="item_new_${rowCount}_${index+1}" style="display:none;">
+                        <input type="text" name="item_new_${rowCount}_${index+1}" ${columns[index].includes('Date') ? 'placeholder="YYYY-MM-DD"' : ''} style="display:none;">
                     `;
                     cell.classList.add('editable');
                     cell.onclick = function() { makeEditable(cell); };
@@ -103,7 +106,7 @@
                 {% else %}
                 <td class="editable" onclick="makeEditable(this)">
                     <span>{{ item }}</span>
-                    <input type="text" name="item_{{ outer_loop.index }}_{{ loop.index }}" value="{{ item }}" style="display:none;">
+                    <input type="text" name="item_{{ outer_loop.index }}_{{ loop.index }}" {% if 'Date' in columns[loop.index-1] %}placeholder="YYYY-MM-DD"{% endif %} value="{{ item }}" style="display:none;">
                 </td>
                 {% endif %}
                 {% endfor %}
