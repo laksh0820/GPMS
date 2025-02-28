@@ -1,0 +1,39 @@
+{% extends 'admin_dashboard.html' %}
+{% block admin_content %}
+
+<br/>
+<div>
+    <h1>Approve requests</h1>
+    <div>  
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Citizen ID</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for email_id in email %}
+            <tr>
+                <th>{{ email_id }}</th>
+                <th>{{ citizen_id[loop.index0] }}</th>
+                <th>{{ role[loop.index0] }}</th>
+                <th>
+                    <form action="{{ url_for('admin.approve') }}" method="POST">
+                        <input type="hidden" name="email" value="{{ email_id }}">
+                        <input type="hidden" name="citizen_id" value="{{ citizen_id[loop.index0] }}">
+                        <input type="hidden" name="role" value="{{ role[loop.index0] }}">
+                        <button type="submit" name="approve" value="Approve" class="approve_btn">Approve</button>
+                        <button type="submit" name="reject" value="Reject" class="reject_btn">Reject</button>
+                    </form>
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+{% endblock %}
