@@ -49,7 +49,15 @@ agri_tab.addEventListener('click', () => {
                     cell3.innerHTML = toFixed(total_area_acres[i-1],2);
                 }
             }
+            
+            let avg_area_acres_per_citizen = response['avg_area_acres_per_citizen'];
+            let avg_income_per_farmer = response['avg_income_per_farmer'];
 
+            let p1 = document.getElementById('avg-area-citizen-para');
+            let p2 = document.getElementById('avg-income-farmer-para');
+
+            p1.innerHTML = 'Average Area (in acres) held by a citizen in the village is close to ' + toFixed(avg_area_acres_per_citizen,2); 
+            p2.innerHTML = 'Average Income of a farmer in the village is close to ' + toFixed(avg_income_per_farmer,2);
 
             console.log('Agricultural data refreshed');
         }
