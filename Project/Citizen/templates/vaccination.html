@@ -41,16 +41,28 @@
                 {% endif %}
                 <th>Vaccine Type</th>
                 <th>Center</th>
+                {% if request_type == 'Active' and current_user.role != 'admin' %}
+                <th>Request</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for type in vaccination_type %}
+            {% for type in vaccine_type %}
             <tr>
                 {% if request_type == 'User' %}
                 <th>{{ date_administered[loop.index0] }}</th>
                 {% endif %}
                 <td>{{ type }}</td>
                 <td>{{ centers[loop.index0] }}</td>
+                {% if request_type == 'Active' and current_user.role != 'admin'%}
+                <th>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="vaccine_id" value="{{ vaccine_id[loop.index0] }}">
+                        {{ form.submit(class='form-control')}}
+                    </form>
+                </th>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
