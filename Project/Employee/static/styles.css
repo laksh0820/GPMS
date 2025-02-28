@@ -15,12 +15,18 @@ table, th, td {
 
 .btn {
     font-weight: bold;
-    color: darkred;
+    color: #04AA6D;
 }
 
 .savebtn {
     position: absolute;
-    left: 50%;
+    left: 54%;
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
 }
 
 .editable {
@@ -59,6 +65,6 @@ table, th, td {
   }
   
   .main {
-    margin-left: 250px;
+    margin-left: 200px;
     padding: 20px;
   }
