@@ -27,7 +27,6 @@
 
 		<div class="tab-content" id="data1-content">
 			<div class="tab-pane fade show active" id="agricultural-data-tabs">
-				<!-- call refresh_agricultural_data from government.py with jinja2 and store it in some variables and the display in a table -->
 				<table class="table table-striped table-hover" id="agricultural-data-table">
 					<thead>
 						<tr>
@@ -44,7 +43,6 @@
 								<td>{{ total_area_acres[loop.index0] }}</td>
 							</tr>
 						{% endfor %}
-						{#{{ refresh_agricultural_data }}#}
 					</tbody>
 				</table>
 			</div>
