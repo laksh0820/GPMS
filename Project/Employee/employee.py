@@ -74,6 +74,7 @@ def welfare_schemes():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -91,6 +92,7 @@ def welfare_schemes():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -108,9 +110,11 @@ def welfare_schemes():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.welfare_schemes'))
     
     res = db.fetchall()
@@ -133,6 +137,7 @@ def vaccinations():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -150,6 +155,7 @@ def vaccinations():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -167,9 +173,11 @@ def vaccinations():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.vaccinations'))
     
     res = db.fetchall()
@@ -192,6 +200,7 @@ def services():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -209,6 +218,7 @@ def services():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -226,9 +236,11 @@ def services():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.services'))
     
     res = db.fetchall()
@@ -251,6 +263,7 @@ def expenditures():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -268,6 +281,7 @@ def expenditures():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -285,9 +299,11 @@ def expenditures():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.expenditures'))
     
     res = db.fetchall()
@@ -310,6 +326,7 @@ def assets():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -327,6 +344,7 @@ def assets():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -344,9 +362,11 @@ def assets():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.assets'))
     
     res = db.fetchall()
@@ -369,6 +389,7 @@ def census():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -386,6 +407,7 @@ def census():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -403,9 +425,11 @@ def census():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.census'))
     
     res = db.fetchall()
@@ -428,6 +452,7 @@ def environment():
 
     form = SaveForm()
     if form.validate_on_submit():
+        error = False
         # Process existing rows
         for key, value in request.form.items():
             if key.startswith('index_') and not key.startswith('index_new_'):
@@ -445,6 +470,7 @@ def environment():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         # Process new rows
         for key, value in request.form.items():
@@ -462,9 +488,11 @@ def environment():
                     conn.commit()
                 except:
                     conn.rollback()
+                    error = True
 
         db.close()
         conn.close()
+        if error: flash("Invalid entries",'error')
         return redirect(url_for('employee.environment'))
     
     res = db.fetchall()
