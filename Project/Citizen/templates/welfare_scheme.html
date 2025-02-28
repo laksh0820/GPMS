@@ -41,6 +41,9 @@
                 {% endif %}
                 <th>Scheme Title</th>
                 <th>Scheme Description</th>
+                {% if request_type == 'Active' and current_user.role != 'admin' %}
+                <th>Request</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -51,6 +54,15 @@
                 {% endif %}
                 <th>{{ scheme }}</th>
                 <td>{{ scheme_description[loop.index0] }}</td>
+                {% if request_type == 'Active' and current_user.role != 'admin' %}
+                <th>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="scheme_id" value="{{ scheme_id[loop.index0] }}">
+                        {{ form.submit(class='form-control')}}
+                    </form>
+                </th>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

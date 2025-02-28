@@ -10,15 +10,29 @@
     <a href='#' class='dropdown-toggle'>Welfare Scheme</a>
     <div class="dropdown-content">
         <a href='{{ url_for("citizen.welfare_scheme", request_type='Active') }}'>Active Schemes</a>
+        {% if current_user.role == 'citizen' %}
         <a href='{{ url_for("citizen.welfare_scheme", request_type='User') }}'>My Schemes</a>
+        {% endif %}
     </div>
     <a href='#' class='dropdown-toggle'>Vaccination</a>
     <div class="dropdown-content">
         <a href='{{ url_for("citizen.vaccination", request_type='Active') }}'>Active Vaccines</a>
+        {% if current_user.role == 'citizen' %}
         <a href='{{ url_for("citizen.vaccination", request_type='User') }}'>My Vaccination</a>
+        {% endif %}
     </div>
+
+    {% if current_user.role == 'citizen' %}
     <a href='{{ url_for("citizen.taxes") }}'>Taxes</a>
-    <a href='{{ url_for("citizen.service") }}'>Service</a>
+    {% endif %}
+
+    <a href='#' class='dropdown-toggle'>Service</a>
+    <div class="dropdown-content">
+        <a href='{{ url_for("citizen.service", request_type='Active') }}'>Active Services</a>
+        {% if current_user.role == 'citizen' %}
+        <a href='{{ url_for("citizen.service", request_type='User') }}'>My Services</a>
+        {% endif %}
+    </div>
 </div>
 
 <div class="main-content">
