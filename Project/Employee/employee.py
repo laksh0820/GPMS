@@ -79,17 +79,14 @@ def welfare_schemes():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Welfare_Scheme
+                                UPDATE Welfare_Scheme
+                                SET name = %s, description = %s
                                 WHERE scheme_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Welfare_Scheme
-                                VALUES (%s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -141,17 +138,14 @@ def vaccinations():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Vaccines
+                                UPDATE Vaccines
+                                SET vaccine_type = %s, centers = %s
                                 WHERE vaccine_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Vaccines
-                                VALUES (%s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -203,17 +197,14 @@ def services():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Service
+                                UPDATE Service
+                                SET doc_type = %s, description = %s
                                 WHERE doc_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Service
-                                VALUES (%s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -265,17 +256,14 @@ def expenditures():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Expenditures
+                                UPDATE Expenditures
+                                SET expense_type = %s, description = %s
                                 WHERE bill_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Expenditures
-                                VALUES (%s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -327,17 +315,14 @@ def assets():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Asset
+                                UPDATE Asset
+                                SET type = %s, location = %s, installation_date = %s
                                 WHERE asset_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Asset
-                                VALUES (%s, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -389,17 +374,14 @@ def census():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Census_Data
+                                UPDATE Census_Data
+                                SET year = %s, population_male = %s, population_female = %s, births_male = %s, births_female = %s, deaths_male = %s, deaths_female = %s, marriages = %s
                                 WHERE data_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Census_Data
-                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -451,17 +433,14 @@ def environment():
             if key.startswith('index_') and not key.startswith('index_new_'):
                 row_id = key.split('_')[1]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_{row_id}'))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
+                temp_list.append(request.form.get(f'index_{row_id}'))
                 try:
                     db.execute("""
-                                DELETE FROM Environmental_Data
+                                UPDATE Environmental_Data
+                                SET date = %s, air_quality_index = %s, water_quality = %s, sanitation = %s
                                 WHERE data_id = %s;
-                               """, [temp_list[0]])
-                    db.execute("""
-                                INSERT INTO Environmental_Data
-                                VALUES (%s, %s, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
