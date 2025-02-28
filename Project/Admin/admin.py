@@ -58,3 +58,40 @@ def approve():
     db.close()
     
     return render_template('approve.html',email=email,citizen_id=citizen_id,role=role)
+
+# Handle the post request for approving users
+@login_required
+@admin_required
+@admin_bp.route('/approve',methods=['POST'])
+def approve_post():
+    conn = get_db_connection()
+    db = conn.cursor()
+    
+    id = request.form['citizen_id']
+    action = request.form['action']
+    
+    if action == 'Reject':
+        db.execute("""
+                    DELETE FROM users
+                    WHERE citizen_id = %s;
+                    """,[id])
+        
+    else:
+        db.execute("""
+                    UPDATE users
+                    SET is_verified = TRUE
+                    WHERE citizen_id = %s;
+                    """,[id])
+    
+    
+    conn.commit()
+    db.close()
+    conn.close()
+    
+    if action=='Approve':
+        flash("Approved Successfully")
+    else:
+        flash("Rejected Successfully")
+        
+    
+    return redirect(url_for('admin.approve'))
