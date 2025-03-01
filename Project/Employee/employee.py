@@ -77,7 +77,7 @@ def taxes():
 @verification_required
 def welfare_schemes():
     table = "Current Welfare Schemes"
-    columns = ['ID', 'Scheme Name', 'Description']
+    columns = ['S. no.', 'Scheme Name', 'Description']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -112,13 +112,12 @@ def welfare_schemes():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Welfare_Scheme
-                                VALUES (%s, %s, %s);
+                                VALUES (DEFAULT, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -133,7 +132,7 @@ def welfare_schemes():
                     db.execute("""
                                 DELETE FROM Welfare_Scheme
                                 WHERE scheme_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -155,7 +154,7 @@ def welfare_schemes():
 @verification_required
 def vaccinations():
     table = "Available Vaccines"
-    columns = ['ID', 'Vaccine Type', 'Centers']
+    columns = ['S. no.', 'Vaccine Type', 'Centers']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -190,13 +189,12 @@ def vaccinations():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Vaccines
-                                VALUES (%s, %s, %s);
+                                VALUES (DEFAULT, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -211,7 +209,7 @@ def vaccinations():
                     db.execute("""
                                 DELETE FROM Vaccines
                                 WHERE vaccine_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -233,7 +231,7 @@ def vaccinations():
 @verification_required
 def services():
     table = "Official Document Services"
-    columns = ['ID', 'Document Type', 'Description']
+    columns = ['S. no.', 'Document Type', 'Description']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -268,13 +266,12 @@ def services():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Service
-                                VALUES (%s, %s, %s);
+                                VALUES (DEFAULT, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -289,7 +286,7 @@ def services():
                     db.execute("""
                                 DELETE FROM Service
                                 WHERE doc_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -311,7 +308,7 @@ def services():
 @verification_required
 def expenditures():
     table = "Panchayat Expenditures"
-    columns = ['ID', 'Expense Type', 'Description']
+    columns = ['S. no.', 'Expense Type', 'Description']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -346,13 +343,12 @@ def expenditures():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Expenditures
-                                VALUES (%s, %s, %s);
+                                VALUES (DEFAULT, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -367,7 +363,7 @@ def expenditures():
                     db.execute("""
                                 DELETE FROM Expenditures
                                 WHERE bill_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -389,7 +385,7 @@ def expenditures():
 @verification_required
 def assets():
     table = "Panchayat Owned Assets"
-    columns = ['ID', 'Asset Type', 'Location', 'Installation Date']
+    columns = ['S. no.', 'Asset Type', 'Location', 'Installation Date']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -424,13 +420,12 @@ def assets():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Asset
-                                VALUES (%s, %s, %s, %s);
+                                VALUES (DEFAULT, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -445,7 +440,7 @@ def assets():
                     db.execute("""
                                 DELETE FROM Asset
                                 WHERE asset_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -467,7 +462,7 @@ def assets():
 @verification_required
 def census():
     table = "Village Census Data"
-    columns = ['ID', 'Year', 'Male Population', 'Female Population', 'Male Births', 'Female Births', 'Male Deaths', 'Female Deaths', 'Marriages']
+    columns = ['S. no.', 'Year', 'Male Population', 'Female Population', 'Male Births', 'Female Births', 'Male Deaths', 'Female Deaths', 'Marriages']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -502,13 +497,12 @@ def census():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Census_Data
-                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                                VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -523,7 +517,7 @@ def census():
                     db.execute("""
                                 DELETE FROM Census_Data
                                 WHERE data_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()
@@ -545,7 +539,7 @@ def census():
 @verification_required
 def environment():
     table = "Environmental Pollution Measures"
-    columns = ['ID', 'Date', 'Air Quality Index', 'Water Quality', 'Sanitation']
+    columns = ['S. no.', 'Date', 'Air Quality Index', 'Water Quality', 'Sanitation']
     conn = get_db_connection()
     db = conn.cursor()
     db.execute("""
@@ -580,13 +574,12 @@ def environment():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
                     db.execute("""
                                 INSERT INTO Environmental_Data
-                                VALUES (%s, %s, %s, %s, %s);
+                                VALUES (DEFAULT, %s, %s, %s, %s);
                                """, temp_list)
                     conn.commit()
                 except:
@@ -601,7 +594,7 @@ def environment():
                     db.execute("""
                                 DELETE FROM Environmental_Data
                                 WHERE data_id = %s;
-                               """, id)
+                               """, [id])
                     conn.commit()
                 except:
                     conn.rollback()

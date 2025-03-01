@@ -34,12 +34,6 @@
 
 {% else %}
 <script>
-    {% if data %}
-    var id = {{ data | last | first }}; // ID of last data entry
-    {% else %}
-    var id = 0;
-    {% endif %}
-
     // Function to make a cell editable
     function makeEditable(cell) {
         var span = cell.querySelector('span');
@@ -59,7 +53,6 @@
         // Get the columns array length from the template
         var columns = {{ columns | tojson | safe }};
         var rowCount = table.rows.length;
-        id++;
 
         // Loop through the columns and create cells
         columns.forEach(
@@ -68,8 +61,8 @@
                 if (index == 0) {
                     // Add the index column (read-only)
                     cell.innerHTML = `
-                        <span>${id}</span>
-                        <input type="hidden" name="index_new_${rowCount}" value="${id}">
+                        <span>${rowCount}</span>
+                        <input type="hidden" name="index_new_${rowCount}">
                     `;
                 } 
                 else {
@@ -131,7 +124,7 @@
                 {% for item in row %}
                 {% if loop.index == 1 %}
                 <td>
-                    <span>{{ item }}</span>
+                    <span>{{ outer_loop.index }}</span>
                     <input type="hidden" name="index_{{ outer_loop.index }}" value="{{ item }}">
                 </td>
                 {% else %}
