@@ -129,6 +129,11 @@ def refresh_agricultural_data():
 @government_monitor_required
 @verification_required
 def refresh_vaccination():
+    conn = get_db_connection()
+    db = conn.cursor()
+
+    
+
     pass
 
 @government_bp.route('/refresh_census_data')
