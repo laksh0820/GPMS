@@ -77,9 +77,9 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Asset (
         asset_id SERIAL PRIMARY KEY,
-        type VARCHAR(50) NOT NULL,
-        location VARCHAR(50) NOT NULL,
-        installation_date DATE NOT NULL
+        type VARCHAR(50) NOT NULL CHECK (type <> ''),
+        location VARCHAR(50) NOT NULL CHECK (location <> ''),
+        installation_date DATE NOT NULL CHECK (installation_date <> '')
     );
     """)
 
@@ -98,8 +98,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Vaccines (
         vaccine_id SERIAL PRIMARY KEY,
-        vaccine_type VARCHAR(50) NOT NULL,
-        centers VARCHAR(50) NOT NULL  
+        vaccine_type VARCHAR(50) NOT NULL CHECK (vaccine_type <> ''),
+        centers VARCHAR(50) NOT NULL CHECK (centers <> '')
     );
     """)
 
@@ -119,8 +119,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Service (
         doc_id SERIAL PRIMARY KEY,
-        doc_type VARCHAR(100) NOT NULL,
-        description VARCHAR(100) NOT NULL
+        doc_type VARCHAR(100) NOT NULL CHECK (doc_type <> ''),
+        description VARCHAR(100) NOT NULL CHECK (description <> '')
     );
     """)
 
@@ -140,8 +140,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Expenditures (
         bill_id SERIAL PRIMARY KEY,
-        expense_type VARCHAR(100) NOT NULL,
-        description VARCHAR(100) NOT NULL  
+        expense_type VARCHAR(100) NOT NULL CHECK (expense_type <> ''),
+        description VARCHAR(100) NOT NULL CHECK (description <> '')
     );
     """)
 
@@ -149,10 +149,10 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Environmental_Data (
         data_id SERIAL PRIMARY KEY,
-        date DATE NOT NULL,
-        air_quality_index INT NOT NULL,
-        water_quality VARCHAR(100) NOT NULL,
-        sanitation VARCHAR(100) NOT NULL   
+        date DATE NOT NULL CHECK (date <> ''),
+        air_quality_index INT NOT NULL CHECK (air_quality_index <> ''),
+        water_quality VARCHAR(100) NOT NULL CHECK (water_quality <> ''),
+        sanitation VARCHAR(100) NOT NULL CHECK (sanitation <> '')   
     );
     """)
 
@@ -160,8 +160,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Welfare_Scheme (
         scheme_id SERIAL PRIMARY KEY,
-        name VARCHAR(50) NOT NULL,
-        description VARCHAR(1000) NOT NULL
+        name VARCHAR(50) NOT NULL CHECK (name <> ''),
+        description VARCHAR(1000) NOT NULL CHECK (description <> '')
     );
     """)
 
@@ -181,14 +181,14 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Census_Data (
         data_id SERIAL PRIMARY KEY,
-        year INT UNIQUE NOT NULL,
-        population_male INT NOT NULL,
-        population_female INT NOT NULL,
-        births_male INT NOT NULL,
-        births_female INT NOT NULL,
-        deaths_male INT NOT NULL,
-        deaths_female INT NOT NULL,
-        marriages INT NOT NULL
+        year INT UNIQUE NOT NULL CHECK (year <> ''),
+        population_male INT NOT NULL CHECK (population_male <> ''),
+        population_female INT NOT NULL CHECK (population_female <> ''),
+        births_male INT NOT NULL CHECK (births_male <> ''),
+        births_female INT NOT NULL CHECK (births_female <> ''),
+        deaths_male INT NOT NULL CHECK (deaths_male <> ''),
+        deaths_female INT NOT NULL CHECK (deaths_female <> ''),
+        marriages INT NOT NULL CHECK (marriages <> '')
     );
     """)
 
