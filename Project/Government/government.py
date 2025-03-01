@@ -13,11 +13,20 @@ def government_monitor_required(inner_func):
     wrapped_function_government_monitor.__name__ = inner_func.__name__
     return wrapped_function_government_monitor    
 
-
+# Wrapper to ensure that the user in verified
+def verification_required(inner_func):
+    def wrapper(*args,**kwargs):
+        if current_user.is_verified == False:
+            flash("Please wait for 24 hours until Admin verifies you",'warning')
+            return redirect(url_for('base'))
+        return inner_func(*args,**kwargs)
+    wrapper.__name__ = inner_func.__name__
+    return wrapper
 
 @government_bp.route('/')
 @login_required
 @government_monitor_required
+@verification_required
 def base():
     conn = get_db_connection()
     db = conn.cursor()
@@ -68,6 +77,7 @@ def base():
 @government_bp.route('/refresh_agricultural_data')
 @login_required
 @government_monitor_required
+@verification_required
 def refresh_agricultural_data():
     conn = get_db_connection()
     db = conn.cursor()
@@ -117,17 +127,20 @@ def refresh_agricultural_data():
 @government_bp.route('/refresh_vaccination')
 @login_required
 @government_monitor_required
+@verification_required
 def refresh_vaccination():
     pass
 
 @government_bp.route('/refresh_census_data')
 @login_required
 @government_monitor_required
+@verification_required
 def refresh_vaccination_data():
     pass
 
 @government_bp.route('/refresh_environmental_data')
 @login_required
 @government_monitor_required
+@verification_required
 def refresh_environmental_data():
     pass

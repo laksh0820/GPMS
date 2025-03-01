@@ -43,6 +43,18 @@ def login():
                 elif form.role.data == 'government':
                     return redirect(url_for('government.base'))
                 elif form.role.data == 'admin':
+                    conn = get_db_connection()
+                    db = conn.cursor()
+                    
+                    db.execute("""
+                    UPDATE users
+                    SET is_verified = TRUE
+                    WHERE id = %s;
+                    """,[user.user_id])
+                    
+                    conn.commit()
+                    db.close()
+                    conn.close()
                     return redirect(url_for('admin.base'))
             else:
                 flash("Wrong Password!! Try Again",'error') 

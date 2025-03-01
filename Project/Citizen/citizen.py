@@ -34,7 +34,7 @@ def verification_required(inner_func):
 @citizen_bp.route('/')
 @login_required
 @citizen_required
-# @verification_required
+@verification_required
 def base():
     return render_template('dashboard.html')
 
@@ -42,7 +42,7 @@ def base():
 @citizen_bp.route('/welfare_scheme',methods=['GET','POST'])
 @login_required
 @citizen_required
-# @verification_required
+@verification_required
 def welfare_scheme():
     form = RequestForm()
     
@@ -136,7 +136,7 @@ def welfare_scheme():
 @citizen_bp.route('/vaccination',methods=['GET','POST'])
 @login_required
 @citizen_required
-# @verification_required
+@verification_required
 def vaccination():
     form = RequestForm()
     
@@ -229,7 +229,7 @@ def vaccination():
 @citizen_bp.route('/taxes')
 @login_required
 @citizen_required
-# @verification_required
+@verification_required
 def taxes():
     conn = get_db_connection()
     db = conn.cursor()
@@ -256,7 +256,7 @@ def taxes():
 @citizen_bp.route('/service',methods=['GET','POST'])
 @login_required
 @citizen_required
-# @verification_required
+@verification_required
 def service():
     form = RequestForm()
     

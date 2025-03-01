@@ -4,7 +4,6 @@ from Project.utils.db_utils import get_db_connection
 
 admin_bp = Blueprint('admin',__name__,url_prefix='/admin',template_folder='templates',static_folder='static')
 
-
 # Wrapper to ensure only admin can access the page
 def admin_required(inner_func):
     def wrapped_function_admin(*args,**kwargs):
@@ -15,19 +14,6 @@ def admin_required(inner_func):
     wrapped_function_admin.__name__ = inner_func.__name__
     return wrapped_function_admin
 
-# Wrapper to ensure that the user in verified
-def verification_required(inner_func):
-    def wrapper(*args,**kwargs):
-        if current_user.is_verified == False:
-            flash("Please wait for 24 hours until Admin verifies you",'warning')
-            return redirect(url_for('base'))
-        return inner_func(*args,**kwargs)
-    wrapper.__name__ = inner_func.__name__
-    return wrapper
-
-
-
-
 # Dashboard for admin
 @admin_bp.route('/')
 @login_required
@@ -35,54 +21,52 @@ def verification_required(inner_func):
 def base():
     return render_template('admin_dashboard.html')
 
-
 # Approve users
+@admin_bp.route('/approve')
 @login_required
 @admin_required
-@admin_bp.route('/approve')
 def approve():
     conn = get_db_connection()
     db = conn.cursor()
     
     db.execute("""
-            SELECT email,citizen_id,role
+            SELECT email,id,role
             FROM users
             WHERE is_verified = FALSE;
             """)
     res = db.fetchall()
     
     email = [row[0] for row in res]
-    citizen_id = [row[1] for row in res]
+    user_id = [row[1] for row in res]
     role = [row[2] for row in res]
     
     db.close()
     
-    return render_template('approve.html',email=email,citizen_id=citizen_id,role=role)
+    return render_template('approve.html',email=email,user_id=user_id,role=role)
 
 # Handle the post request for approving users
+@admin_bp.route('/approve',methods=['POST'])
 @login_required
 @admin_required
-@admin_bp.route('/approve',methods=['POST'])
 def approve_post():
     conn = get_db_connection()
     db = conn.cursor()
     
-    id = request.form['citizen_id']
+    id = request.form['user_id']
     action = request.form['action']
     
     if action == 'Reject':
         db.execute("""
                     DELETE FROM users
-                    WHERE citizen_id = %s;
+                    WHERE id = %s;
                     """,[id])
         
     else:
         db.execute("""
                     UPDATE users
                     SET is_verified = TRUE
-                    WHERE citizen_id = %s;
+                    WHERE id = %s;
                     """,[id])
-    
     
     conn.commit()
     db.close()

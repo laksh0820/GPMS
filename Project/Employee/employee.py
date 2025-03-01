@@ -21,15 +21,27 @@ def employee_required(inner_func):
     wrapped_function_employee.__name__ = inner_func.__name__
     return wrapped_function_employee
 
+# Wrapper to ensure that the user in verified
+def verification_required(inner_func):
+    def wrapper(*args,**kwargs):
+        if current_user.is_verified == False:
+            flash("Please wait for 24 hours until Admin verifies you",'warning')
+            return redirect(url_for('base'))
+        return inner_func(*args,**kwargs)
+    wrapper.__name__ = inner_func.__name__
+    return wrapper
+
 @employee_bp.route('/')
 @login_required
 @employee_required
+@verification_required
 def base():
     return render_template('employee_dashboard.html')
 
 @employee_bp.route('/taxes', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def taxes():
     table = "Overdue Taxes"
     columns = ['ID', 'Name', 'Tax Type', 'Tax Month', 'Tax Year', 'Amount Due (Rs)', 'Due Date', 'Status']
@@ -62,6 +74,7 @@ def taxes():
 @employee_bp.route('/welfare_schemes', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def welfare_schemes():
     table = "Current Welfare Schemes"
     columns = ['ID', 'Scheme Name', 'Description']
@@ -125,6 +138,7 @@ def welfare_schemes():
 @employee_bp.route('/vaccinations', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def vaccinations():
     table = "Available Vaccines"
     columns = ['ID', 'Vaccine Type', 'Centers']
@@ -188,6 +202,7 @@ def vaccinations():
 @employee_bp.route('/services', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def services():
     table = "Official Document Services"
     columns = ['ID', 'Document Type', 'Description']
@@ -251,6 +266,7 @@ def services():
 @employee_bp.route('/expenditures', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def expenditures():
     table = "Panchayat Expenditures"
     columns = ['ID', 'Expense Type', 'Description']
@@ -314,6 +330,7 @@ def expenditures():
 @employee_bp.route('/assets', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def assets():
     table = "Panchayat Owned Assets"
     columns = ['ID', 'Asset Type', 'Location', 'Installation Date']
@@ -377,6 +394,7 @@ def assets():
 @employee_bp.route('/census', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def census():
     table = "Village Census Data"
     columns = ['ID', 'Year', 'Male Population', 'Female Population', 'Male Births', 'Female Births', 'Male Deaths', 'Female Deaths', 'Marriages']
@@ -440,6 +458,7 @@ def census():
 @employee_bp.route('/environment', methods=['GET','POST'])
 @login_required
 @employee_required
+@verification_required
 def environment():
     table = "Environmental Pollution Measures"
     columns = ['ID', 'Date', 'Air Quality Index', 'Water Quality', 'Sanitation']
