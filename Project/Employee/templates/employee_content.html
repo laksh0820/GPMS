@@ -34,7 +34,11 @@
 
 {% else %}
 <script>
+    {% if data %}
     var id = {{ data | last | first }}; // ID of last data entry
+    {% else %}
+    var id = 0;
+    {% endif %}
 
     // Function to make a cell editable
     function makeEditable(cell) {
