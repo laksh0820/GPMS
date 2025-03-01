@@ -90,12 +90,12 @@ def welfare_schemes():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Welfare_Scheme
@@ -112,7 +112,7 @@ def welfare_schemes():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -120,6 +120,20 @@ def welfare_schemes():
                                 INSERT INTO Welfare_Scheme
                                 VALUES (%s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Welfare_Scheme
+                                WHERE scheme_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -154,12 +168,12 @@ def vaccinations():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Vaccines
@@ -176,7 +190,7 @@ def vaccinations():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -184,6 +198,20 @@ def vaccinations():
                                 INSERT INTO Vaccines
                                 VALUES (%s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Vaccines
+                                WHERE vaccine_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -218,12 +246,12 @@ def services():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Service
@@ -240,7 +268,7 @@ def services():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -248,6 +276,20 @@ def services():
                                 INSERT INTO Service
                                 VALUES (%s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Service
+                                WHERE doc_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -282,12 +324,12 @@ def expenditures():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Expenditures
@@ -304,7 +346,7 @@ def expenditures():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -312,6 +354,20 @@ def expenditures():
                                 INSERT INTO Expenditures
                                 VALUES (%s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Expenditures
+                                WHERE bill_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -346,12 +402,12 @@ def assets():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Asset
@@ -368,7 +424,7 @@ def assets():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -376,6 +432,20 @@ def assets():
                                 INSERT INTO Asset
                                 VALUES (%s, %s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Asset
+                                WHERE asset_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -410,12 +480,12 @@ def census():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Census_Data
@@ -432,7 +502,7 @@ def census():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -440,6 +510,20 @@ def census():
                                 INSERT INTO Census_Data
                                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Census_Data
+                                WHERE data_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()
@@ -474,12 +558,12 @@ def environment():
         error = False
         # Process existing rows
         for key, value in request.form.items():
-            if key.startswith('index_') and not key.startswith('index_new_'):
+            if key.startswith('index_') and not key.startswith('index_new_') and not key.startswith('index_del_'):
                 row_id = key.split('_')[1]
                 temp_list = []
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_{row_id}_{i}'))
-                temp_list.append(request.form.get(f'index_{row_id}'))
+                temp_list.append(request.form.get(key))
                 try:
                     db.execute("""
                                 UPDATE Environmental_Data
@@ -496,7 +580,7 @@ def environment():
             if key.startswith('index_new_'):
                 row_id = key.split('_')[2]
                 temp_list = []
-                temp_list.append(request.form.get(f'index_new_{row_id}'))
+                temp_list.append(request.form.get(key))
                 for i in range(2, len(columns) + 1):
                     temp_list.append(request.form.get(f'item_new_{row_id}_{i}'))
                 try:
@@ -504,6 +588,20 @@ def environment():
                                 INSERT INTO Environmental_Data
                                 VALUES (%s, %s, %s, %s, %s);
                                """, temp_list)
+                    conn.commit()
+                except:
+                    conn.rollback()
+                    error = True
+        
+        # Delete marked rows
+        for key, value in request.form.items():
+            if key.startswith('index_del_'):
+                id = request.form.get(key)
+                try:
+                    db.execute("""
+                                DELETE FROM Environmental_Data
+                                WHERE data_id = %s;
+                               """, id)
                     conn.commit()
                 except:
                     conn.rollback()

@@ -83,6 +83,32 @@
                 }
             }
         );
+
+        // Create delete row button
+        var cell = newRow.insertCell(columns.length);
+        cell.innerHTML = `
+            <button type="button" name="${rowCount}" onclick="deleteRow(this)">Delete Row</button>
+        `;
+    }
+
+    // Function to delete a row
+    function deleteRow(btn) {
+        var row = btn.getAttribute("name");
+        var text = btn.textContent;
+        if(text == "Delete Row") {
+            var element = document.querySelector('[name="index_' + row + '"]');
+            if(element) {
+                btn.textContent = "Undo"
+                element.setAttribute("name", 'index_del_' + row);
+            }
+        }
+        else {
+            var element = document.querySelector('[name="index_del_' + row + '"]');
+            if(element) {
+                btn.textContent = "Delete Row"
+                element.setAttribute("name", 'index_' + row);
+            }
+        }
     }
 </script>
 
@@ -95,6 +121,7 @@
                 {% for column in columns %}
                 <th>{{ column }}</th>
                 {% endfor %}
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -114,6 +141,9 @@
                 </td>
                 {% endif %}
                 {% endfor %}
+                <td>
+                    <button type="button" name="{{ outer_loop.index }}" onclick="deleteRow(this)">Delete Row</button>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
