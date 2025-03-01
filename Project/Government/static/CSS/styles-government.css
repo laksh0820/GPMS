@@ -5,7 +5,7 @@
   --nav-tabs-link-hover-border-color: #464e56;
   --nav-tabs-link-hover-bg: #2488ec;
   --nav-tabs-link-active-color: #0b2036;
-  --nav-tabs-link-active-bg: #ea9797;
+  --nav-tabs-link-active-bg: #97eaa9;
   --nav-tabs-link-active-border-color: #0680fa;
   border-bottom: var(--nav-tabs-border-width) solid var(--nav-tabs-border-color);
 }
@@ -26,4 +26,37 @@
   color: var(--nav-tabs-link-active-color);
   background-color: var(--nav-tabs-link-active-bg);
   border-color: var(--nav-tabs-link-active-border-color);
+}
+
+
+/* Container for sidebar and main content */
+.container {
+  font-family: Arial, sans-serif;
+  display: block;
+  padding-left: 0px;
+  height: 100%;
+}
+
+
+/* Sidebar styling */
+.sidebar {
+  width: 240px; /* Width of the sidebar */
+  background-color: #2b3035; /* Dark background */
+  color: white; /* Text color */
+  padding: 20px;
+  padding-top: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100vh; /* Full height of the viewport */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+
+/* Tab-content styling */
+.tab-content {
+  margin-left: 240px; /* Same width as the sidebar */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in width */
 }
