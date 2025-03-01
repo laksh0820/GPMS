@@ -57,9 +57,9 @@ def login():
                     conn.close()
                     return redirect(url_for('admin.base'))
             else:
-                flash("Wrong Password!! Try Again",'error') 
+                flash("Wrong Password! Try Again",'error') 
         else:
-            flash("User not Found!! Try Again",'error')
+            flash("User not Found! Try Again",'error')
         db.close()
         conn.close()
     return render_template('login.html',form=form)
