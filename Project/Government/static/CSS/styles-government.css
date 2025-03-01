@@ -56,7 +56,14 @@
 
 /* Tab-content styling */
 .tab-content {
-  margin-left: 240px; /* Same width as the sidebar */
-  padding: 20px;
+  margin-left: 160px; /* Same width as the sidebar */
+  padding: 10px;
   box-sizing: border-box; /* Include padding in width */
+}
+
+
+/* Tab-pane styling */
+.tab-pane {
+  padding: 5px;
+  border-top: none;
 }

@@ -9,7 +9,7 @@
 
 	<br>
 	<div class="container-fluid">
-		<ul class="nav nav-tabs nav-fill mb-3 sidebar" id="data-navbar" role="tablist">
+		<ul class="nav nav-tabs nav-justified sidebar" id="data-navbar" role="tablist">
 			<h2 role="presentation">Government Monitor Dashboard</h2>
 			<li class="nav-item active" role="presentation">
 				<a class="nav-link active" id="agricultural-data-tab" role="tab" data-bs-toggle="tab" href="#agricultural-data-tabs">Agricultural Data</a>
@@ -27,7 +27,7 @@
 
 		<div class="tab-content" id="data1-content">
 			<div class="tab-pane fade show active" id="agricultural-data-tabs">
-				<table class="table table-striped table-hover table-bordered border-info" id="agricultural-data-table">
+				<table class="table table-striped table-hover table-bordered border-info d-flex" id="agricultural-data-table">
 					<thead>
 						<tr>
 							<th scope="col">Crop</th>
@@ -51,13 +51,113 @@
 				<p id="avg-income-farmer-para">Average Income of a farmer in the village is close to {{ '%0.2f' % avg_income_per_farmer|float }}</p>
 			</div>
 			<div class="tab-pane fade" id="vaccination-tabs">
-				Vaccinations Content
+				<table class="table table-striped table-hover table-bordered border-info" id="vaccination-table">
+					<thead>
+						<tr>
+							<th scope="col">Vaccine Type</th>
+							<th scope="col">Number of Citizens who have administered</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for vaccine in vaccine_type %}
+							<tr>
+								<td>{{ vaccine }}</td>
+								<td>{{ num_citizens[loop.index0] }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<table class="table table-striped table-hover table-bordered border-info" id="top5-centers-table">
+					<thead>
+						<tr>
+							<th scope="col">Center</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for center in top_5_centers %}
+							<tr>
+								<td>{{ center }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<br>
+				<p id="atleast-one-para">Total Number of Citizens who have been administered atleast one vaccine is close to {{ num_citizens_vaccinated	 }}</p>
+				<br>
+				<p id="all-vaccines-para">Total Number of Citizens who have been administered all the available vaccine types is close to {{ num_citizens_vaccinated_all }}</p>
+				<br>
+				<p id="not-vaccinated-para">Total Number of Citizens who have not been administered any vaccine is close to {{ num_citizens_not_vaccinated }}</p>
 			</div>
 			<div class="tab-pane fade" id="census-data-tabs">
-				Census Data Content
+				<table class="table table-striped table-hover table-bordered border-info d-flex" id="census-data-table">
+					<thead>
+						<tr>
+							<th scope="col">Year</th>
+							<th scope="col">Population(Male)</th>
+							<th scope="col">Population(Female)</th>
+							<th scope="col">Births(Male)</th>
+							<th scope="col">Births(Female)</th>
+							<th scope="col">Deaths(Male)</th>
+							<th scope="col">Deaths(Female)</th>
+							<th scope="col">Marriages</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for year in years %}
+							<tr>
+								<td>{{ year }}</td>
+								<td>{{ population_male[loop.index0] }}</td>
+								<td>{{ population_female[loop.index0] }}</td>
+								<td>{{ births_male[loop.index0] }}</td>
+								<td>{{ births_female[loop.index0] }}</td>
+								<td>{{ deaths_male[loop.index0] }}</td>
+								<td>{{ deaths_female[loop.index0] }}</td>
+								<td>{{ marriages[loop.index0] }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</div>
 			<div class="tab-pane fade" id="environmental-data-tabs">
-				Environmental Data Content
+				<h3>Information about the last 5 days recorded</h3>
+				<table class="table table-striped table-hover table-bordered border-info" id="last5-environmental-table">
+					<thead>
+						<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Air Quality Index</th>
+							<th scope="col">Water Quality Index</th>
+							<th scope="col">Sanitation</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for date in dates %}
+							<tr>
+								<td>{{ date }}</td>
+								<td>{{ air_quality_index[loop.index0] }}</td>
+								<td>{{ water_quality[loop.index0] }}</td>
+								<td>{{ sanitation[loop.index0] }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<br>
+				<h3>Worst 5 days in terms of Air Quality Index ever recorded</h3>
+				<table class="table table-striped table-hover table-bordered border-info" id="worst5-air-table">
+					<thead>
+						<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Air Quality Index</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for date in air_dates %}
+							<tr>
+								<td>{{ date }}</td>
+								<td>{{ air_quality_index_5[loop.index0] }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
