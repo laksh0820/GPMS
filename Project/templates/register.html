@@ -7,21 +7,19 @@
 {% block content %}
 
 <title>Left Sidebar</title>
-<div class="container">
-    <!-- Left Sidebar -->
-    <div class="sidebar">
-        <h2>Role of User</h2><br/>
-        <a href="/register_role/citizen">Citizen</a>
-        <a href="/register_role/employee">Employee</a>
-        <a href="/register_role/admin">Admin</a>
-        <a href="/register_role/government">Government</a>
-    </div>
+<!-- Left Sidebar -->
+<div class="sidebar">
+    <h2>Role of User</h2><br/>
+    <a href="/register_role/citizen">Citizen</a>
+    <a href="/register_role/employee">Employee</a>
+    <a href="/register_role/admin">Admin</a>
+    <a href="/register_role/government">Government</a>
+</div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        {% block main_content %}
-        {% endblock %}
-    </div>
+<!-- Main Content -->
+<div class="main-content">
+    {% block main_content %}
+    {% endblock %}
 </div>
 
 <script>

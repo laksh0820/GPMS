@@ -1,7 +1,7 @@
 /* Container for sidebar and main content */
 .container {
     font-family: Arial, sans-serif;
-    display: inline;
+    display: block;
     padding-left: 0px;
     height: 100%;
 }
@@ -15,6 +15,7 @@
     padding-top: 100px;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 1;
     height: 100vh; /* Full height of the viewport */
     box-sizing: border-box; /* Include padding in width */
@@ -38,7 +39,6 @@
 /* Main content area */
 .main-content {
     margin-left: 250px;
-    position: absolute;
     width: 83.5%;
     height: 100%;
     padding: 50px;

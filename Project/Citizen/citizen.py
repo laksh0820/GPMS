@@ -235,7 +235,7 @@ def taxes():
     db = conn.cursor()
     
     db.execute("""
-               SELECT type,tax_year,amount_due,due_date,status
+               SELECT type,tax_year,tax_month,amount_due,due_date,status
                FROM taxes
                WHERE citizen_id = %s;
             """,[current_user.citizen_id])
@@ -243,13 +243,14 @@ def taxes():
     res = db.fetchall()
     tax_type = [row[0] for row in res]
     tax_year = [row[1] for row in res]
-    amount_due = [row[2] for row in res]
-    due_date = [row[3] for row in res]
-    status = [row[4] for row in res]
+    tax_month = [row[2] for row in res]
+    amount_due = [row[3] for row in res]
+    due_date = [row[4] for row in res]
+    status = [row[5] for row in res]
     
     db.close()
     conn.close()
-    return render_template('taxes.html',tax_type=tax_type,tax_year=tax_year,amount_due=amount_due,due_date=due_date,status=status)
+    return render_template('taxes.html',tax_type=tax_type,tax_year=tax_year,tax_month=tax_month,amount_due=amount_due,due_date=due_date,status=status)
 
 # Services
 @citizen_bp.route('/service',methods=['GET','POST'])

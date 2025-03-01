@@ -143,48 +143,22 @@ def register_role(role):
                     return redirect(url_for('login'))
             elif role == 'government':
                 db.execute("""
-                        SELECT *
-                        from users
-                        where email = %s and role = 'citizen';
-                        """,[form.email.data])
-                res = db.fetchall()
-                if len(res) == 0:
-                    flash('Please Register as a citizen before registering as a Government Monitor','error')
-                    db.close()
-                    conn.close()
-                    return redirect(url_for('register'))
-                else:
-                    user = User(res[0])
-                    db.execute("""
-                            insert into users(email,password,role) values (%s,%s,%s);
-                            """,[form.email.data,form.password.data,role])
-                    conn.commit()
-                    flash('Registration Successful','Success')
-                    db.close()
-                    conn.close()
-                    return redirect(url_for('login'))
+                        insert into users(email,password,role) values (%s,%s,%s);
+                        """,[form.email.data,form.password.data,role])
+                conn.commit()
+                flash('Registration Successful','Success')
+                db.close()
+                conn.close()
+                return redirect(url_for('login'))
             elif role == 'admin':
                 db.execute("""
-                        SELECT *
-                        from users
-                        where email = %s and role = 'citizen';
-                        """,[form.email.data])
-                res = db.fetchall()
-                if len(res) == 0:
-                    flash('Please Register as a citizen before registering as an Admin','error')
-                    db.close()
-                    conn.close()
-                    return redirect(url_for('register'))
-                else:
-                    user = User(res[0])
-                    db.execute("""
-                            insert into users(email,password,role) values (%s,%s,%s);
-                            """,[form.email.data,form.password.data,role])
-                    conn.commit()
-                    flash('Registration Successful','Success')
-                    db.close()
-                    conn.close()
-                    return redirect(url_for('login'))
+                        insert into users(email,password,role) values (%s,%s,%s);
+                        """,[form.email.data,form.password.data,role])
+                conn.commit()
+                flash('Registration Successful','Success')
+                db.close()
+                conn.close()
+                return redirect(url_for('login'))
             else:
                 flash('Invalid Registration Role','error')
                 db.close()
