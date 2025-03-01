@@ -77,9 +77,9 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Asset (
         asset_id SERIAL PRIMARY KEY,
-        type VARCHAR(50),
-        location VARCHAR(50),
-        installation_date DATE
+        type VARCHAR(50) NOT NULL,
+        location VARCHAR(50) NOT NULL,
+        installation_date DATE NOT NULL
     );
     """)
 
@@ -98,8 +98,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Vaccines (
         vaccine_id SERIAL PRIMARY KEY,
-        vaccine_type VARCHAR(50),
-        centers VARCHAR(50)  
+        vaccine_type VARCHAR(50) NOT NULL,
+        centers VARCHAR(50) NOT NULL  
     );
     """)
 
@@ -119,8 +119,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Service (
         doc_id SERIAL PRIMARY KEY,
-        doc_type VARCHAR(100),
-        description VARCHAR(100)    
+        doc_type VARCHAR(100) NOT NULL,
+        description VARCHAR(100) NOT NULL
     );
     """)
 
@@ -140,8 +140,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Expenditures (
         bill_id SERIAL PRIMARY KEY,
-        expense_type VARCHAR(100),
-        description VARCHAR(100)  
+        expense_type VARCHAR(100) NOT NULL,
+        description VARCHAR(100) NOT NULL  
     );
     """)
 
@@ -149,10 +149,10 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Environmental_Data (
         data_id SERIAL PRIMARY KEY,
-        date DATE,
-        air_quality_index INT,
-        water_quality VARCHAR(100),
-        sanitation VARCHAR(100)   
+        date DATE NOT NULL,
+        air_quality_index INT NOT NULL,
+        water_quality VARCHAR(100) NOT NULL,
+        sanitation VARCHAR(100) NOT NULL   
     );
     """)
 
@@ -160,8 +160,8 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Welfare_Scheme (
         scheme_id SERIAL PRIMARY KEY,
-        name VARCHAR(50),
-        description VARCHAR(1000)
+        name VARCHAR(50) NOT NULL,
+        description VARCHAR(1000) NOT NULL
     );
     """)
 
@@ -181,14 +181,14 @@ db.execute("""
 db.execute("""
     CREATE TABLE IF NOT EXISTS Census_Data (
         data_id SERIAL PRIMARY KEY,
-        year INT,
-        population_male INT,
-        population_female INT,
-        births_male INT,
-        births_female INT,
-        deaths_male INT,
-        deaths_female INT,
-        marriages INT
+        year INT UNIQUE NOT NULL,
+        population_male INT NOT NULL,
+        population_female INT NOT NULL,
+        births_male INT NOT NULL,
+        births_female INT NOT NULL,
+        deaths_male INT NOT NULL,
+        deaths_female INT NOT NULL,
+        marriages INT NOT NULL
     );
     """)
 
