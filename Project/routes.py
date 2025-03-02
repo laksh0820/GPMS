@@ -1,5 +1,6 @@
 from flask import Flask,render_template,redirect,url_for,flash, request
 from flask_login import login_user,login_required,current_user,logout_user
+from werkzeug.security import generate_password_hash,check_password_hash
 from Project import app
 from Project.forms import LogInForm,CitizenForm,EmployeeForm,GovernmentForm,AdminForm
 from Project.models import User
@@ -30,7 +31,7 @@ def login():
         res = db.fetchall()
         if len(res):
             user = User(res[0])
-            if user.password == form.password.data:
+            if check_password_hash(user.password,str(form.password.data)):
                 login_user(user,remember=form.remember_me.data)
                 flash('Logged in Successfully')
                 
@@ -122,7 +123,7 @@ def register_role(role):
                         """,[citizen_id,form.name.data,form.gender.data,form.dob.data,form.income.data,form.educational_qualification.data])
                 db.execute("""
                         insert into users(email,password,citizen_id,role) values (%s,%s,%s,%s);
-                        """,[form.email.data,form.password.data,citizen_id,role])
+                        """,[form.email.data,generate_password_hash(str(form.password.data)),citizen_id,role])
                 conn.commit()
                 flash('Registration Successful','Success')
                 db.close()
@@ -147,7 +148,7 @@ def register_role(role):
                             """,[user.citizen_id,form.role.data])
                     db.execute("""
                         insert into users(email,password,role) values (%s,%s,%s);
-                        """,[form.email.data,form.password.data,role])
+                        """,[form.email.data,generate_password_hash(str(form.password.data)),role])
                     conn.commit()
                     flash('Registration Successful','Success')
                     db.close()
@@ -156,7 +157,7 @@ def register_role(role):
             elif role == 'government':
                 db.execute("""
                         insert into users(email,password,role) values (%s,%s,%s);
-                        """,[form.email.data,form.password.data,role])
+                        """,[form.email.data,generate_password_hash(str(form.password.data)),role])
                 conn.commit()
                 flash('Registration Successful','Success')
                 db.close()
@@ -165,7 +166,7 @@ def register_role(role):
             elif role == 'admin':
                 db.execute("""
                         insert into users(email,password,role) values (%s,%s,%s);
-                        """,[form.email.data,form.password.data,role])
+                        """,[form.email.data,generate_password_hash(str(form.password.data)),role])
                 conn.commit()
                 flash('Registration Successful','Success')
                 db.close()

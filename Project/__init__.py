@@ -16,6 +16,7 @@ DB_HOST = "10.5.18.70"
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'grampanchayatksdkar37ro8hf83fh3892hmfijw38fh'
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=20)
+app.config['SECURITY_PASSWORD_SALT'] = 'GPMS//kSDfkuas_hufhasiughnahgav_uhrganuvrh_iuerghuvh//23jnrxnl4r'
 app.config['DB_NAME'] = DB_NAME
 app.config['DB_USER'] = DB_USER
 app.config['DB_PASSWORD'] = DB_PASSWORD
