@@ -56,8 +56,8 @@ agri_tab.addEventListener('click', () => {
             let p1 = document.getElementById('avg-area-citizen-para');
             let p2 = document.getElementById('avg-income-farmer-para');
 
-            p1.innerHTML = 'Average Area (in acres) held by a citizen in the village is close to ' + toFixed(avg_area_acres_per_citizen,2); 
-            p2.innerHTML = 'Average Income of a farmer in the village is close to ' + toFixed(avg_income_per_farmer,2);
+            p1.innerHTML = 'Average Area (in acres) held by a citizen in the village is ' + toFixed(avg_area_acres_per_citizen,2); 
+            p2.innerHTML = 'Average Income of a farmer in the village is ' + toFixed(avg_income_per_farmer,2);
 
             console.log('Agricultural data refreshed');
         }
@@ -136,9 +136,9 @@ vac_tab.addEventListener('click', () => {
             let p2 = document.getElementById('all-vaccines-para');
             let p3 = document.getElementById('not-vaccinated-para');
 
-            p1.innerHTML = 'Total Number of Citizens who have been administered atleast one vaccine is close to ' + num_citizens_vaccinated;
-            p2.innerHTML = 'Total Number of Citizens who have been administered all the available vaccine types is close to ' + num_citizens_vaccinated_all;
-            p3.innerHTML = 'Total Number of Citizens who have not been administered any vaccine is close to ' + num_citizens_not_vaccinated;
+            p1.innerHTML = 'Total Number of Citizens who have been administered atleast one vaccine is ' + num_citizens_vaccinated;
+            p2.innerHTML = 'Total Number of Citizens who have been administered all the available vaccine types is ' + num_citizens_vaccinated_all;
+            p3.innerHTML = 'Total Number of Citizens who have not been administered any vaccine is ' + num_citizens_not_vaccinated;
 
             console.log('Vaccination data refreshed');
         }

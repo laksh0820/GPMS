@@ -52,11 +52,11 @@ def fetch_agricultural_data():
                 GROUP BY crop_type;
             """)
     res = db.fetchall()
-
     # Extracting relevant information
     crop_type = [row[0] for row in res]
     avg_area_acres = [row[1] for row in res]
     total_area_acres = [row[2] for row in res]
+
 
 
     # Gather Information of Average Land covered by a citizen in the village
@@ -65,7 +65,7 @@ def fetch_agricultural_data():
                 FROM land_record;
             """)
     res = db.fetchall()
-    if (res == None or res[0][0] == None):
+    if (res == None or res[0] == None):
         avg_area_acres_per_citizen = 0
     else:
         avg_area_acres_per_citizen = res[0][0]
@@ -77,7 +77,7 @@ def fetch_agricultural_data():
                 FROM citizen JOIN land_record USING (citizen_id);
                 """)
     res = db.fetchall()
-    if res == None or res[0][0] == None:
+    if res == None or res[0] == None:
         avg_income_per_farmer = 0
     else:
         avg_income_per_farmer = res[0][0]
@@ -111,7 +111,10 @@ def fetch_vaccination():
                 FROM Vaccination;
                 """)
     res = db.fetchall()
-    num_citizens_vaccinated = len(res)
+    if res == None:
+        num_citizens_vaccinated = 0
+    else:
+        num_citizens_vaccinated = len(res)
 
 
     # Gather Information of the number of citizens who have been vaccinated by all the available vaccine types
@@ -122,7 +125,10 @@ def fetch_vaccination():
                 HAVING count(vaccine_id) = (SELECT count(vaccine_id) FROM Vaccines);
                 """)
     res = db.fetchall()
-    num_citizens_vaccinated_all = len(res)
+    if res == None:
+        num_citizens_vaccinated_all = 0
+    else:
+        num_citizens_vaccinated_all = len(res)
 
 
     # Gather Information of the number of citizens who have not been vaccinated
@@ -132,7 +138,10 @@ def fetch_vaccination():
                 WHERE citizen_id NOT IN (SELECT citizen_id FROM Vaccination);
                 """)
     res = db.fetchall()
-    num_citizens_not_vaccinated = len(res)
+    if res == None:
+        num_citizens_not_vaccinated = 0
+    else:
+        num_citizens_not_vaccinated = len(res)
 
 
     # Gather Information of the top 5 centers with the most number of vaccinations
