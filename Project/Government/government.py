@@ -65,7 +65,10 @@ def fetch_agricultural_data():
                 FROM land_record;
             """)
     res = db.fetchall()
-    avg_area_acres_per_citizen = res[0][0]
+    if (res == None or res[0][0] == None):
+        avg_area_acres_per_citizen = 0
+    else:
+        avg_area_acres_per_citizen = res[0][0]
     
 
     # Gather Information of average income of a farmer in the village
@@ -74,7 +77,10 @@ def fetch_agricultural_data():
                 FROM citizen JOIN land_record USING (citizen_id);
                 """)
     res = db.fetchall()
-    avg_income_per_farmer = res[0][0]
+    if res == None or res[0][0] == None:
+        avg_income_per_farmer = 0
+    else:
+        avg_income_per_farmer = res[0][0]
 
 
     db.close()

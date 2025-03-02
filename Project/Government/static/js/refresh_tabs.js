@@ -220,7 +220,7 @@ environment_tab.addEventListener('click', () => {
         {
             let dates = response['dates'];
             let air_quality_index = response['air_quality_index'];
-            let water_quality_index = response['water_quality_index'];
+            let water_quality_index = response['water_quality'];
             let sanitation = response['sanitation'];
             let air_dates = response['air_dates'];
             let air_quality_index_5 = response['air_quality_index_5'];
