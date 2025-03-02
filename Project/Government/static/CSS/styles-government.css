@@ -27,7 +27,13 @@
   background-color: var(--nav-tabs-link-active-bg);
   border-color: var(--nav-tabs-link-active-border-color);
 }
-
+.nav {
+  display: block;
+}
+.nav-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 /* Container for sidebar and main content */
 .container {
