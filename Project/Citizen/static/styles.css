@@ -68,6 +68,7 @@ table {
     width: 100%; /* Full width of the container */
     border-collapse: collapse; /* Merge cell borders */
     border: 2px solid #333; /* Outline for the table */
+    background-color: aliceblue;
 }
 
 th, td {
@@ -77,6 +78,5 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2; /* Light gray background for headers */
     width: 1px;
 }
