@@ -35,7 +35,7 @@ def verification_required(inner_func):
 @government_monitor_required
 @verification_required
 def base():
-    return render_template('Government/dashboard.html')
+    return render_template('base.html')
 
 
 
