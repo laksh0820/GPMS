@@ -83,8 +83,6 @@ def tax_generate():
         db.close()
         conn.close()
 
-tax_generate()
-
 # Define a function that requires the application context
 def initialize_database():
     with app.app_context():
@@ -100,11 +98,11 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Citizen (
                 citizen_id INT,
-                name VARCHAR(50),
+                name VARCHAR(100),
                 gender VARCHAR(10),
                 dob DATE,
                 income DECIMAL(12,2),
-                educational_qualification VARCHAR(20),
+                educational_qualification VARCHAR(100),
                 primary key (citizen_id)
             );
             """)
@@ -127,7 +125,7 @@ def initialize_database():
             CREATE TABLE IF NOT EXISTS Panchayat_Employee (
                 employee_id SERIAL PRIMARY KEY,
                 citizen_id INT,
-                role VARCHAR(50),
+                role VARCHAR(100),
                 foreign key (citizen_id) references Citizen
             );       
             """)
@@ -137,7 +135,7 @@ def initialize_database():
             CREATE TABLE IF NOT EXISTS Taxes (
                 tax_id SERIAL PRIMARY KEY,
                 citizen_id INT,  
-                type VARCHAR(50),
+                type VARCHAR(100),
                 tax_month INT CHECK (tax_month >= 1 AND tax_month <= 12), 
                 tax_year INT,
                 amount_due DECIMAL(12,2),
@@ -151,8 +149,8 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Asset (
                 asset_id SERIAL PRIMARY KEY,
-                type VARCHAR(50) NOT NULL CHECK (type <> ''),
-                location VARCHAR(50) NOT NULL CHECK (location <> ''),
+                type VARCHAR(100) NOT NULL CHECK (type <> ''),
+                location VARCHAR(500) NOT NULL CHECK (location <> ''),
                 installation_date DATE NOT NULL
             );
             """)
@@ -163,7 +161,7 @@ def initialize_database():
                 land_id SERIAL PRIMARY KEY,
                 citizen_id INT,
                 area_acres DECIMAL(10,4),
-                crop_type VARCHAR(50),
+                crop_type VARCHAR(500),
                 foreign key (citizen_id) references Citizen
             );
             """)
@@ -172,8 +170,8 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Vaccines (
                 vaccine_id SERIAL PRIMARY KEY,
-                vaccine_type VARCHAR(50) NOT NULL CHECK (vaccine_type <> ''),
-                centers VARCHAR(50) NOT NULL CHECK (centers <> '')
+                vaccine_type VARCHAR(100) NOT NULL CHECK (vaccine_type <> ''),
+                centers VARCHAR(500) NOT NULL CHECK (centers <> '')
             );
             """)
 
@@ -193,8 +191,8 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Service (
                 doc_id SERIAL PRIMARY KEY,
-                doc_type VARCHAR(100) NOT NULL CHECK (doc_type <> ''),
-                description VARCHAR(100) NOT NULL CHECK (description <> '')
+                doc_type VARCHAR(200) NOT NULL CHECK (doc_type <> ''),
+                description VARCHAR(1000) NOT NULL CHECK (description <> '')
             );
             """)
 
@@ -214,8 +212,8 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Expenditures (
                 bill_id SERIAL PRIMARY KEY,
-                expense_type VARCHAR(100) NOT NULL CHECK (expense_type <> ''),
-                description VARCHAR(100) NOT NULL CHECK (description <> '')
+                expense_type VARCHAR(200) NOT NULL CHECK (expense_type <> ''),
+                description VARCHAR(1000) NOT NULL CHECK (description <> '')
             );
             """)
 
@@ -225,8 +223,8 @@ def initialize_database():
                 data_id SERIAL PRIMARY KEY,
                 date DATE NOT NULL,
                 air_quality_index INT NOT NULL,
-                water_quality VARCHAR(100) NOT NULL CHECK (water_quality <> ''),
-                sanitation VARCHAR(100) NOT NULL CHECK (sanitation <> '')   
+                water_quality VARCHAR(200) NOT NULL CHECK (water_quality <> ''),
+                sanitation VARCHAR(200) NOT NULL CHECK (sanitation <> '')   
             );
             """)
 
@@ -234,7 +232,7 @@ def initialize_database():
         db.execute("""
             CREATE TABLE IF NOT EXISTS Welfare_Scheme (
                 scheme_id SERIAL PRIMARY KEY,
-                name VARCHAR(50) NOT NULL CHECK (name <> ''),
+                name VARCHAR(200) NOT NULL CHECK (name <> ''),
                 description VARCHAR(1000) NOT NULL CHECK (description <> '')
             );
             """)
@@ -271,5 +269,6 @@ def initialize_database():
         conn.close()
         
 initialize_database()
+tax_generate()
 
 from Project import routes
