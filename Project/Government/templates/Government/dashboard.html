@@ -11,22 +11,23 @@
 	<div class="container-fluid">
 		<ul class="nav nav-tabs nav-justified sidebar" id="data-navbar" role="tablist">
 			<h2 role="presentation">Government Monitor Dashboard</h2>
-			<li class="nav-item active" role="presentation">
+			<li class="nav-item active" id="list-item" role="presentation">
 				<a class="nav-link active" id="agricultural-data-tab" role="tab" data-bs-toggle="tab" href="#agricultural-data-tabs">Agricultural Data</a>
 			</li>
-			<li class="nav-item" role="presentation">
+			<li class="nav-item" id="list-item" role="presentation">
 				<a class="nav-link" id="vaccination-tab" role="tab" data-bs-toggle="tab" href="#vaccination-tabs">Vaccinations</a>
 			</li>
-			<li class="nav-item" role="presentation">
+			<li class="nav-item" id="list-item" role="presentation">
 				<a class="nav-link" id="census-data-tab" role="tab" data-bs-toggle="tab" href="#census-data-tabs">Census Data</a>
 			</li>
-			<li class="nav-item" role="presentation">
+			<li class="nav-item" id="list-item" role="presentation">
 				<a class="nav-link" id="environmental-data-tab" role="tab" data-bs-toggle="tab" href="#environmental-data-tabs">Environmental Data</a>
 			</li>
 		</ul>
 
 		<div class="tab-content" id="data1-content">
 			<div class="tab-pane fade show active" id="agricultural-data-tabs">
+				<h3>Agricultural Data</h3>
 				<table class="table table-striped table-hover table-bordered border-info d-flex" id="agricultural-data-table">
 					<thead>
 						<tr>
@@ -51,11 +52,12 @@
 				<p id="avg-income-farmer-para">Average Income of a farmer in the village is close to {{ '%0.2f' % avg_income_per_farmer|float }}</p>
 			</div>
 			<div class="tab-pane fade" id="vaccination-tabs">
+				<h3>Vaccine Types and their respective Number of Recipients</h3>
 				<table class="table table-striped table-hover table-bordered border-info" id="vaccination-table">
 					<thead>
 						<tr>
 							<th scope="col">Vaccine Type</th>
-							<th scope="col">Number of Citizens who have administered</th>
+							<th scope="col">Number of Recipients</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -67,6 +69,8 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				<br>
+				<h3>Top 5 centers with the most number of vaccinations</h3>
 				<table class="table table-striped table-hover table-bordered border-info" id="top5-centers-table">
 					<thead>
 						<tr>
@@ -89,7 +93,8 @@
 				<p id="not-vaccinated-para">Total Number of Citizens who have not been administered any vaccine is close to {{ num_citizens_not_vaccinated }}</p>
 			</div>
 			<div class="tab-pane fade" id="census-data-tabs">
-				<table class="table table-striped table-hover table-bordered border-info d-flex" id="census-data-table">
+				<h3>Census Data</h3>
+				<table class="table table-striped table-hover table-bordered border-info " id="census-data-table">
 					<thead>
 						<tr>
 							<th scope="col">Year</th>
