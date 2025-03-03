@@ -26,9 +26,9 @@ class LogInForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class CitizenForm(UserForm):
-    name = StringField("Username",validators=[DataRequired()])
+    name = StringField("Name",validators=[DataRequired()])
     gender = RadioField("Gender",validators=[DataRequired()],choices=[('male','male'),('female','female')])
-    dob = DateField("Date",validators=[DataRequired()],format='%Y-%m-%d')
+    dob = DateField("Date of Birth",validators=[DataRequired()],format='%Y-%m-%d')
     educational_qualification = StringField("Educational Qualification",validators=[DataRequired()])
     income = FloatField("Income",validators=[DataRequired()])
     submit = SubmitField("Submit")
